@@ -1246,34 +1246,14 @@ namespace EXCEL_CONNECTION
             catch { }
             return buffer;
         }
-
-
-
-
-
-
-
-
     }
 
     internal class Program
     {
         static void Main(string[] args)
         {
-
             EXCELSTREAM MasterFile1 = new EXCELSTREAM("MASTER");
             EXCELSTREAM RealtimeFile1 = new EXCELSTREAM("REALTIME");
-
-
-            //MasterFile1.writeModelName("KAYABA1");
-            //MasterFile1.FilePrint("TestMaster1.xlsx");
-            //Console.WriteLine(MasterFile1.readModelName());
-
-            //RealtimeFile1.writeModelName("KAYABA1");
-            //RealtimeFile1.FilePrint("TestRealtime1.xlsx");
-            //Console.WriteLine(RealtimeFile1.readModelName());
-
-            Console.ReadKey();
         }
     }
 }
