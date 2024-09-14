@@ -1116,7 +1116,7 @@ namespace EXCEL_CONNECTION
             {
                 if (_filemode == 1)
                 {
-
+                    for (int i = 0; i < _cellRealtimeJudgementVarMap.Count; i++) { _cellRealtimeJudgementVarMap[i].SetValue(buffer[i]); }
                 }
                 return 1;
             }
@@ -1130,7 +1130,7 @@ namespace EXCEL_CONNECTION
             {
                 if (_filemode == 1)
                 {
-
+                    for (int i = 0; i < _cellRealtimeJudgementVarMap.Count; i++) { buffer.Add(_cellRealtimeJudgementVarMap[i].GetString()); }
                 }
             }
             catch { }
