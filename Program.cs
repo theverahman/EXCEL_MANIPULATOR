@@ -865,9 +865,9 @@ namespace LIBEXCELMANIPULATOR
             catch { return 0; }
         }
 
-        public int FileRead(string filename)
+        public int FileRead(ref XLWorkbook wbObject, string filename)
         {
-            try { base._XLblueprint.SaveAs(filename); return 1; }
+            try { wbObject = new XLWorkbook(filename); return 1; }
             catch { return 0; }
         }
 
