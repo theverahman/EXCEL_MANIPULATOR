@@ -981,13 +981,24 @@ namespace LIBEXCELMANIPULATOR
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < _cellMasterStep2VarMap.Count; iv++)
+                    for (int iv = 0; iv < (_cellMasterStep2VarMap.Count - 1); iv++)
                     {
                         List<string> scope = buffer[iv];
-                        for (int ivy = 0; ivy < _cellMasterStep2VarMap[iv].RowCount(); ivy++)
+                        if (scope.Count > _cellMasterStep2VarMap[iv].RowCount() - 1)
                         {
-                            _cellMasterStep2VarMap[iv].Row(ivy).SetValue(scope[ivy]);
+                            for (int ivy = 0; ivy < (_cellMasterStep2VarMap[iv].RowCount() - 1); ivy++)
+                            {
+                                _cellMasterStep2VarMap[iv].Row(ivy + 1).SetValue(scope[ivy]);
+                            }
                         }
+                        else if (scope.Count < _cellMasterStep2VarMap[iv].RowCount() - 1)
+                        {
+                            for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
+                            {
+                                _cellMasterStep2VarMap[iv].Row(ivy + 1).SetValue(scope[ivy]);
+                            }
+                        }
+
                     }
                 }
                 return 1;
@@ -1015,12 +1026,12 @@ namespace LIBEXCELMANIPULATOR
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < _cellMasterStep2VarMap.Count; iv++)
+                    for (int iv = 0; iv < (_cellMasterStep2VarMap.Count - 1); iv++)
                     {
                         List<string> scope = new List<string>();
-                        for (int ivy = 0; ivy < _cellMasterStep2VarMap[iv].RowCount(); ivy++)
+                        for (int ivy = 0; ivy < (_cellMasterStep2VarMap[iv].RowCount() - 1); ivy++)
                         {
-                            scope.Add(_cellMasterStep2VarMap[iv].Row(ivy).ToString());
+                            scope.Add(_cellMasterStep2VarMap[iv].Row(ivy + 1).ToString());
                         }
                         buffer.Add(scope);
                     }
@@ -1036,13 +1047,24 @@ namespace LIBEXCELMANIPULATOR
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < _cellMasterStep3VarMap.Count; iv++)
+                    for (int iv = 0; iv < (_cellMasterStep3VarMap.Count - 1); iv++)
                     {
                         List<string> scope = buffer[iv];
-                        for (int ivy = 0; ivy < _cellMasterStep3VarMap[iv].RowCount(); ivy++)
+                        if (scope.Count > _cellMasterStep3VarMap[iv].RowCount() - 1)
                         {
-                            _cellMasterStep3VarMap[iv].Row(ivy).SetValue(scope[ivy]);
+                            for (int ivy = 0; ivy < (_cellMasterStep3VarMap[iv].RowCount() - 1); ivy++)
+                            {
+                                _cellMasterStep3VarMap[iv].Row(ivy + 1).SetValue(scope[ivy]);
+                            }
                         }
+                        else if (scope.Count < _cellMasterStep3VarMap[iv].RowCount() - 1)
+                        {
+                            for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
+                            {
+                                _cellMasterStep3VarMap[iv].Row(ivy + 1).SetValue(scope[ivy]);
+                            }
+                        }
+                        
                     }
                 }
                 return 1;
@@ -1070,12 +1092,12 @@ namespace LIBEXCELMANIPULATOR
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < _cellMasterStep3VarMap.Count; iv++)
+                    for (int iv = 0; iv < (_cellMasterStep3VarMap.Count - 1); iv++)
                     {
                         List<string> scope = new List<string>();
-                        for (int ivy = 0; ivy < _cellMasterStep3VarMap[iv].RowCount(); ivy++)
+                        for (int ivy = 0; ivy < (_cellMasterStep3VarMap[iv].RowCount() - 1); ivy++)
                         {
-                            scope.Add(_cellMasterStep3VarMap[iv].Row(ivy).ToString());
+                            scope.Add(_cellMasterStep3VarMap[iv].Row(ivy + 1).ToString());
                         }
                         buffer.Add(scope);
                     }
@@ -1114,22 +1136,22 @@ namespace LIBEXCELMANIPULATOR
 
         public int setRealtimeStep2(List<List<string>> buffer)
         {
-            try
+            //try
             {
                 if (_filemode == 1)
                 {
-                    for (int iv = 0; iv < _cellRealtimeStep2VarMap.Count; iv++)
+                    for (int iv = 0; iv < (_cellRealtimeStep2VarMap.Count); iv++)
                     {
                         List<string> scope = buffer[iv];
-                        for (int ivy = 0; ivy < _cellRealtimeStep2VarMap[iv].RowCount(); ivy++)
+                        for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
                         {
-                            _cellRealtimeStep2VarMap[iv].Row(ivy).SetValue(scope[ivy]);
+                            _cellRealtimeStep2VarMap[iv].Row(ivy + 1).SetValue(scope[ivy]);
                         }
                     }
                 }
                 return 1;
             }
-            catch { return 0; }
+            //catch { return 0; }
         }
 
         public List<List<string>> getRealtimeStep2()
@@ -1152,12 +1174,12 @@ namespace LIBEXCELMANIPULATOR
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < _cellRealtimeStep2VarMap.Count; iv++)
+                    for (int iv = 0; iv < (_cellRealtimeStep2VarMap.Count); iv++)
                     {
                         List<string> scope = new List<string>();
-                        for (int ivy = 0; ivy < _cellRealtimeStep2VarMap[iv].RowCount(); ivy++)
+                        for (int ivy = 0; ivy < (_cellRealtimeStep2VarMap[iv].RowCount() - 1); ivy++)
                         {
-                            scope.Add(_cellRealtimeStep2VarMap[iv].Row(ivy).ToString());
+                            scope.Add(_cellRealtimeStep2VarMap[iv].Row(ivy + 1).ToString());
                         }
                         buffer.Add(scope);
                     }
@@ -1169,22 +1191,22 @@ namespace LIBEXCELMANIPULATOR
 
         public int setRealtimeStep3(List<List<string>> buffer)
         {
-            try
+            //try
             {
                 if (_filemode == 1)
                 {
-                    for (int iv = 0; iv < _cellRealtimeStep3VarMap.Count; iv++)
+                    for (int iv = 0; iv < (_cellRealtimeStep3VarMap.Count); iv++)
                     {
                         List<string> scope = buffer[iv];
-                        for (int ivy = 0; ivy < _cellRealtimeStep3VarMap[iv].RowCount(); ivy++)
+                        for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
                         {
-                            _cellRealtimeStep3VarMap[iv].Row(ivy).SetValue(scope[ivy]);
+                            _cellRealtimeStep3VarMap[iv].Row(ivy + 1).SetValue(scope[ivy]);
                         }
                     }
                 }
                 return 1;
             }
-            catch { return 0; }
+            //catch { return 0; }
         }
 
         public List<List<string>> getRealtimeStep3()
@@ -1207,12 +1229,12 @@ namespace LIBEXCELMANIPULATOR
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < _cellRealtimeStep3VarMap.Count; iv++)
+                    for (int iv = 0; iv < (_cellRealtimeStep3VarMap.Count); iv++)
                     {
                         List<string> scope = new List<string>();
-                        for (int ivy = 0; ivy < _cellRealtimeStep3VarMap[iv].RowCount(); ivy++)
+                        for (int ivy = 0; ivy < (_cellRealtimeStep3VarMap[iv].RowCount() - 1); ivy++)
                         {
-                            scope.Add(_cellRealtimeStep3VarMap[iv].Row(ivy).ToString());
+                            scope.Add(_cellRealtimeStep3VarMap[iv].Row(ivy + 1).ToString());
                         }
                         buffer.Add(scope);
                     }
