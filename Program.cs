@@ -904,6 +904,44 @@ namespace LIBEXCELMANIPULATOR
             return buffer;
         }
 
+        public int setParameterStep1doublediscrete(double buffer, int index)
+        {
+            //try
+            {
+                if (_filemode == 1)
+                {
+                    _cellRealtimeStep1ParamVarMap[index].SetValue(buffer);
+}
+                else if (_filemode == 0)
+                {
+                    _cellMasterStep1ParamVarMap[index].SetValue(buffer);
+                }
+                return 1;
+            }
+            //catch { return 0; }
+
+        }
+
+        public double getParameterStep1doublediscrete(int index)
+        {
+            double buffer = new double();
+            byte buff = new byte();
+            bool b = new bool(); 
+            try
+            {
+                if (_filemode == 1)
+                {
+                    b = _cellRealtimeStep1ParamVarMap[index].TryGetValue<double>(out buffer);
+                }
+                else if (_filemode == 0)
+                {
+                    b = _cellMasterStep1ParamVarMap[index].TryGetValue<double>(out buffer);
+                }
+            }
+            catch { }
+            return buffer;
+        }
+
         public int setParameterStep1(List<string> buffer)
         {
             //try
@@ -1251,6 +1289,20 @@ namespace LIBEXCELMANIPULATOR
         {
             EXCELSTREAM MasterFile1 = new EXCELSTREAM("MASTER");
             EXCELSTREAM RealtimeFile1 = new EXCELSTREAM("REALTIME");
+
+            MasterFile1.setModelName("KAYABA1");
+            MasterFile1.setParameterStep1doublediscrete(990.568, 1);
+            MasterFile1.FilePrint("TestMaster1.xlsx");
+            Console.WriteLine(MasterFile1.getModelName());
+            Console.WriteLine(MasterFile1.getParameterStep1doublediscrete(1));
+
+            RealtimeFile1.setModelName("KAYABA2");
+            RealtimeFile1.setParameterStep1doublediscrete(677.568, 1);
+            RealtimeFile1.FilePrint("TestRealtime1.xlsx");
+            Console.WriteLine(RealtimeFile1.getModelName());
+            Console.WriteLine(RealtimeFile1.getParameterStep1doublediscrete(1));
+
+            Console.ReadKey();
         }
     }
 }
