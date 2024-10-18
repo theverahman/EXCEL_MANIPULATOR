@@ -1,4 +1,6 @@
 ﻿using ClosedXML.Excel;
+using ClosedXML.Report.Utils;
+using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections;
@@ -869,17 +871,18 @@ namespace LIBEXCELMANIPULATOR
             catch { return " "; }
         }
 
-        public int setDateTime(List<string> buffer)
+        public int setDateTime(List<Object> buffer)
         {
             try
             {
                 if (_filemode == 1)
                 {
-                    for (int i = 0; i < 6; i++) { string sbuff = new string(buffer[i]); _cellRealtimeModelTableVarMap[i+1].SetValue(sbuff); }
+                    for (int i = 0; i < 6; i++) { var sbuff = Convert.ChangeType(buffer[i], buffer[i].GetType()); _cellRealtimeModelTableVarMap[i+1].SetValue((XLCellValue)sbuff); }
                 }
+                
                 else if (_filemode == 0)
                 {
-                    for (int i = 0; i < 6; i++) { string sbuff = new string(buffer[i]); _cellMasterModelTableVarMap[i + 1].SetValue(sbuff); }
+                    for (int i = 0; i < 6; i++) { var sbuff = Convert.ChangeType(buffer[i], buffer[i].GetType()); _cellMasterModelTableVarMap[i + 1].SetValue((XLCellValue)sbuff); }
                 }
                 return 1;
             }
@@ -942,17 +945,19 @@ namespace LIBEXCELMANIPULATOR
             return buffer;
         }
 
-        public int setParameterStep1(List<string> buffer)
+        public int setParameterStep1<T>(List<T> buffer)
         {
             //try
             {
+                List<Object?> buffobj = buffer.ConvertAll(x => (Object)x);
+
                 if (_filemode == 1)
                 {
-                    for (int i = 0; i < _cellRealtimeStep1ParamVarMap.Count; i++) { string sbuff = new string(buffer[i]); _cellRealtimeStep1ParamVarMap[i].SetValue(sbuff); }
+                    for (int i = 0; i < _cellRealtimeStep1ParamVarMap.Count; i++) { var sbuff = Convert.ChangeType(buffobj[i], buffobj[i].GetType()); _cellRealtimeStep1ParamVarMap[i].SetValue((XLCellValue)sbuff); }
                 }
                 else if (_filemode == 0)
                 {
-                    for (int i = 0; i < _cellMasterStep1ParamVarMap.Count; i++) { string sbuff = new string(buffer[i]); _cellMasterStep1ParamVarMap[i].SetValue(sbuff); }
+                    for (int i = 0; i < _cellMasterStep1ParamVarMap.Count; i++) { var sbuff = Convert.ChangeType(buffobj[i], buffobj[i].GetType()); _cellMasterStep1ParamVarMap[i].SetValue((XLCellValue)sbuff); }
                 }
                 return 1;
             }
@@ -960,60 +965,61 @@ namespace LIBEXCELMANIPULATOR
 
         }
 
-        public List<string> getParameterStep1()
+        public List<object> getParameterStep1()
         {
-            List<string> buffer = new List<string> { };
+            List<object> buffer = new List<object> { };
             try
             {
                 if (_filemode == 1)
                 {
-                    for (int i = 0; i < _cellRealtimeStep1ParamVarMap.Count; i++) { buffer.Add(_cellRealtimeStep1ParamVarMap[i].GetString()); }
+                    for (int i = 0; i < _cellRealtimeStep1ParamVarMap.Count; i++) { buffer.Add(_cellRealtimeStep1ParamVarMap[i]); }
                 }
                 else if (_filemode == 0)
                 {
-                    for (int i = 0; i < _cellMasterStep1ParamVarMap.Count; i++) { buffer.Add(_cellMasterStep1ParamVarMap[i].GetString()); }
+                    for (int i = 0; i < _cellMasterStep1ParamVarMap.Count; i++) { buffer.Add(_cellMasterStep1ParamVarMap[i]); }
                 }
             }
             catch { }
             return buffer;
         }
 
-        public int setParameterStep2345(List<string> buffer)
+        public int setParameterStep2345<T>(List<T> buffer)
         {
             //try
+            List<Object?> buffobj = buffer.ConvertAll(x => (Object)x);
             {
                 if (_filemode == 1)
                 {
-                    for (int i = 0; i < _cellRealtimeStep2345ParamVarMap.Count; i++) { string sbuff = new string(buffer[i]); _cellRealtimeStep2345ParamVarMap[i].SetValue(sbuff); }
+                    for (int i = 0; i < _cellRealtimeStep2345ParamVarMap.Count; i++) { var sbuff = Convert.ChangeType(buffobj[i], buffobj[i].GetType()); ; _cellRealtimeStep2345ParamVarMap[i].SetValue((XLCellValue)sbuff); }
                 }
                 else if (_filemode == 0)
                 {
-                    for (int i = 0; i < _cellMasterStep2345ParamVarMap.Count; i++) { string sbuff = new string(buffer[i]); _cellMasterStep2345ParamVarMap[i].SetValue(sbuff); }
+                    for (int i = 0; i < _cellMasterStep2345ParamVarMap.Count; i++) { var sbuff = Convert.ChangeType(buffobj[i], buffobj[i].GetType()); ; _cellMasterStep2345ParamVarMap[i].SetValue((XLCellValue)sbuff); }
                 }
                 return 1;
             }
             //catch { return 0; }
         }
 
-        public List<string> getParameterStep2345()
+        public List<object> getParameterStep2345()
         {
-            List<string> buffer = new List<string> { };
+            List<object> buffer = new List<object> { };
             try
             {
                 if (_filemode == 1)
                 {
-                    for (int i = 0; i < _cellRealtimeStep2345ParamVarMap.Count; i++) { buffer.Add(_cellRealtimeStep2345ParamVarMap[i].GetString()); }
+                    for (int i = 0; i < _cellRealtimeStep2345ParamVarMap.Count; i++) { buffer.Add(_cellRealtimeStep2345ParamVarMap[i]); }
                 }
                 else if (_filemode == 0)
                 {
-                    for (int i = 0; i < _cellMasterStep2345ParamVarMap.Count; i++) { buffer.Add(_cellMasterStep2345ParamVarMap[i].GetString()); }
+                    for (int i = 0; i < _cellMasterStep2345ParamVarMap.Count; i++) { buffer.Add(_cellMasterStep2345ParamVarMap[i]); }
                 }
             }
             catch { }
             return buffer;
         }
 
-        public int setMasterStep2(List<List<string>> buffer)
+        public int setMasterStep2<T>(List<List<T>> buffer)
         {
             try
             {
@@ -1021,19 +1027,20 @@ namespace LIBEXCELMANIPULATOR
                 {
                     for (int iv = 0; iv < (_cellMasterStep2VarMap.Count - 1); iv++)
                     {
-                        List<string> scope = buffer[iv];
+                        List<Object?> scope = buffer[iv].ConvertAll(x => (Object)x);
+
                         if (scope.Count > _cellMasterStep2VarMap[iv].RowCount() - 1)
                         {
                             for (int ivy = 0; ivy < (_cellMasterStep2VarMap[iv].RowCount() - 1); ivy++)
                             {
-                                _cellMasterStep2VarMap[iv].Row(ivy + 1).SetValue(scope[ivy]);
+                                _cellMasterStep2VarMap[iv].Row(ivy + 1).SetValue((XLCellValue)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
                             }
                         }
                         else if (scope.Count < _cellMasterStep2VarMap[iv].RowCount() - 1)
                         {
                             for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
                             {
-                                _cellMasterStep2VarMap[iv].Row(ivy + 1).SetValue(scope[ivy]);
+                                _cellMasterStep2VarMap[iv].Row(ivy + 1).SetValue((XLCellValue)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
                             }
                         }
 
@@ -1044,32 +1051,20 @@ namespace LIBEXCELMANIPULATOR
             catch { return 0; }
         }
 
-        public List<List<string>> getMasterStep2()
+        public List<List<object>> getMasterStep2()
         {
-            List<List<string>> buffer = new List<List<string>> { };
-            List<string> buffercompressstroke = new List<string> { };
-            List<string> buffercompressload = new List<string> { };
-            List<string> buffercompresslower = new List<string> { };
-            List<string> buffercompressupper = new List<string> { };
-            List<string> bufferextendstroke = new List<string> { };
-            List<string> bufferextendload = new List<string> { };
-            List<string> bufferextendlower = new List<string> { };
-            List<string> bufferextendupper = new List<string> { };
-            List<string> bufferdifferencestroke = new List<string> { };
-            List<string> bufferdifferenceload = new List<string> { };
-            List<string> bufferdifferencelower = new List<string> { };
-            List<string> bufferdifferenceupper = new List<string> { };
-
+            List<List<object>> buffer = new List<List<object>> { };
+            
             try
             {
                 if (_filemode == 0)
                 {
                     for (int iv = 0; iv < (_cellMasterStep2VarMap.Count - 1); iv++)
                     {
-                        List<string> scope = new List<string>();
+                        List<object> scope = new List<object>();
                         for (int ivy = 0; ivy < (_cellMasterStep2VarMap[iv].RowCount() - 1); ivy++)
                         {
-                            scope.Add(_cellMasterStep2VarMap[iv].Row(ivy + 1).ToString());
+                            scope.Add(_cellMasterStep2VarMap[iv].Row(ivy + 1).As<Object>());
                         }
                         buffer.Add(scope);
                     }
@@ -1079,7 +1074,7 @@ namespace LIBEXCELMANIPULATOR
             return buffer;
         }
 
-        public int setMasterStep3(List<List<string>> buffer)
+        public int setMasterStep3<T>(List<List<T>> buffer)
         {
             try
             {
@@ -1087,19 +1082,19 @@ namespace LIBEXCELMANIPULATOR
                 {
                     for (int iv = 0; iv < (_cellMasterStep3VarMap.Count - 1); iv++)
                     {
-                        List<string> scope = buffer[iv];
+                        List<Object?> scope = buffer[iv].ConvertAll(x => (Object)x);
                         if (scope.Count > _cellMasterStep3VarMap[iv].RowCount() - 1)
                         {
                             for (int ivy = 0; ivy < (_cellMasterStep3VarMap[iv].RowCount() - 1); ivy++)
                             {
-                                _cellMasterStep3VarMap[iv].Row(ivy + 1).SetValue(scope[ivy]);
+                                _cellMasterStep3VarMap[iv].Row(ivy + 1).SetValue((XLCellValue)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
                             }
                         }
                         else if (scope.Count < _cellMasterStep3VarMap[iv].RowCount() - 1)
                         {
                             for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
                             {
-                                _cellMasterStep3VarMap[iv].Row(ivy + 1).SetValue(scope[ivy]);
+                                _cellMasterStep3VarMap[iv].Row(ivy + 1).SetValue((XLCellValue)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
                             }
                         }
                         
@@ -1110,21 +1105,9 @@ namespace LIBEXCELMANIPULATOR
             catch { return 0; }
         }
 
-        public List<List<string>> getMasterStep3()
+        public List<List<object>> getMasterStep3()
         {
-            List<List<string>> buffer = new List<List<string>> { };
-            List<string> buffercompressstroke = new List<string> { };
-            List<string> buffercompressload = new List<string> { };
-            List<string> buffercompresslower = new List<string> { };
-            List<string> buffercompressupper = new List<string> { };
-            List<string> bufferextendstroke = new List<string> { };
-            List<string> bufferextendload = new List<string> { };
-            List<string> bufferextendlower = new List<string> { };
-            List<string> bufferextendupper = new List<string> { };
-            List<string> bufferdifferencestroke = new List<string> { };
-            List<string> bufferdifferenceload = new List<string> { };
-            List<string> bufferdifferencelower = new List<string> { };
-            List<string> bufferdifferenceupper = new List<string> { };
+            List<List<object>> buffer = new List<List<object>> { };
 
             try
             {
@@ -1132,10 +1115,10 @@ namespace LIBEXCELMANIPULATOR
                 {
                     for (int iv = 0; iv < (_cellMasterStep3VarMap.Count - 1); iv++)
                     {
-                        List<string> scope = new List<string>();
+                        List<object> scope = new List<object>();
                         for (int ivy = 0; ivy < (_cellMasterStep3VarMap[iv].RowCount() - 1); ivy++)
                         {
-                            scope.Add(_cellMasterStep3VarMap[iv].Row(ivy + 1).ToString());
+                            scope.Add(_cellMasterStep3VarMap[iv].Row(ivy + 1).As<Object>());
                         }
                         buffer.Add(scope);
                     }
@@ -1145,34 +1128,34 @@ namespace LIBEXCELMANIPULATOR
             return buffer;
         }
 
-        public int setRealtimeJudgement(List<string> buffer)
+        public int setRealtimeJudgement<T>(List<T> buffer)
         {
             try
             {
                 if (_filemode == 1)
                 {
-                    for (int i = 0; i < _cellRealtimeJudgementVarMap.Count; i++) { _cellRealtimeJudgementVarMap[i].SetValue(buffer[i]); }
+                    for (int i = 0; i < _cellRealtimeJudgementVarMap.Count; i++) { _cellRealtimeJudgementVarMap[i].SetValue((XLCellValue)Convert.ChangeType(buffer[i], buffer[i].GetType())); }
                 }
                 return 1;
             }
             catch { return 0; }
         }
 
-        public List<string> getRealtimeJudgement()
+        public List<object> getRealtimeJudgement()
         {
-            List<string> buffer = new List<string> { };
+            List<object> buffer = new List<object> { };
             try
             {
                 if (_filemode == 1)
                 {
-                    for (int i = 0; i < _cellRealtimeJudgementVarMap.Count; i++) { buffer.Add(_cellRealtimeJudgementVarMap[i].GetString()); }
+                    for (int i = 0; i < _cellRealtimeJudgementVarMap.Count; i++) { buffer.Add(_cellRealtimeJudgementVarMap[i].As<Object>()); }
                 }
             }
             catch { }
             return buffer;
         }
 
-        public int setRealtimeStep2(List<List<string>> buffer)
+        public int setRealtimeStep2<T>(List<List<T>> buffer)
         {
             //try
             {
@@ -1180,10 +1163,10 @@ namespace LIBEXCELMANIPULATOR
                 {
                     for (int iv = 0; iv < (_cellRealtimeStep2VarMap.Count); iv++)
                     {
-                        List<string> scope = buffer[iv];
+                        List<Object?> scope = buffer[iv].ConvertAll(x => (Object)x);
                         for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
                         {
-                            _cellRealtimeStep2VarMap[iv].Row(ivy + 1).SetValue(scope[ivy]);
+                            _cellRealtimeStep2VarMap[iv].Row(ivy + 1).SetValue((XLCellValue)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
                         }
                     }
                 }
@@ -1192,20 +1175,20 @@ namespace LIBEXCELMANIPULATOR
             //catch { return 0; }
         }
 
-        public List<List<string>> getRealtimeStep2()
+        public List<List<object>> getRealtimeStep2()
         {
-            List<List<string>> buffer = new List<List<string>> { };
-            List<string> buffercompressstroke = new List<string> { };
+            List<List<object>> buffer = new List<List<object>> { };
+            List<object> buffercompressstroke = new List<object> { };
             buffer.Add(buffercompressstroke);
-            List<string> buffercompressload = new List<string> { };
+            List<object> buffercompressload = new List<object> { };
             buffer.Add(buffercompressload);
-            List<string> bufferextendstroke = new List<string> { };
+            List<object> bufferextendstroke = new List<object> { };
             buffer.Add(bufferextendstroke);
-            List<string> bufferextendload = new List<string> { };
+            List<object> bufferextendload = new List<object> { };
             buffer.Add(bufferextendload);
-            List<string> bufferdifferencestroke = new List<string> { };
+            List<object> bufferdifferencestroke = new List<object> { };
             buffer.Add(bufferdifferencestroke);
-            List<string> bufferdifferenceload = new List<string> { };
+            List<object> bufferdifferenceload = new List<object> { };
             buffer.Add(bufferdifferenceload);
 
             try
@@ -1214,10 +1197,10 @@ namespace LIBEXCELMANIPULATOR
                 {
                     for (int iv = 0; iv < (_cellRealtimeStep2VarMap.Count); iv++)
                     {
-                        List<string> scope = new List<string>();
+                        List<object> scope = new List<object>();
                         for (int ivy = 0; ivy < (_cellRealtimeStep2VarMap[iv].RowCount() - 1); ivy++)
                         {
-                            scope.Add(_cellRealtimeStep2VarMap[iv].Row(ivy + 1).ToString());
+                            scope.Add(_cellRealtimeStep2VarMap[iv].Row(ivy + 1).As<Object>());
                         }
                         buffer.Add(scope);
                     }
@@ -1227,7 +1210,7 @@ namespace LIBEXCELMANIPULATOR
             return buffer;
         }
 
-        public int setRealtimeStep3(List<List<string>> buffer)
+        public int setRealtimeStep3<T>(List<List<T>> buffer)
         {
             //try
             {
@@ -1235,10 +1218,10 @@ namespace LIBEXCELMANIPULATOR
                 {
                     for (int iv = 0; iv < (_cellRealtimeStep3VarMap.Count); iv++)
                     {
-                        List<string> scope = buffer[iv];
+                        List<Object?> scope = buffer[iv].ConvertAll(x => (Object)x);
                         for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
                         {
-                            _cellRealtimeStep3VarMap[iv].Row(ivy + 1).SetValue(scope[ivy]);
+                            _cellRealtimeStep3VarMap[iv].Row(ivy + 1).SetValue((XLCellValue)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
                         }
                     }
                 }
@@ -1247,20 +1230,20 @@ namespace LIBEXCELMANIPULATOR
             //catch { return 0; }
         }
 
-        public List<List<string>> getRealtimeStep3()
+        public List<List<object>> getRealtimeStep3()
         {
-            List<List<string>> buffer = new List<List<string>> { };
-            List<string> buffercompressstroke = new List<string> { };
+            List<List<object>> buffer = new List<List<object>> { };
+            List<object> buffercompressstroke = new List<object> { };
             buffer.Add(buffercompressstroke);
-            List<string> buffercompressload = new List<string> { };
+            List<object> buffercompressload = new List<object> { };
             buffer.Add(buffercompressload);
-            List<string> bufferextendstroke = new List<string> { };
+            List<object> bufferextendstroke = new List<object> { };
             buffer.Add(bufferextendstroke);
-            List<string> bufferextendload = new List<string> { };
+            List<object> bufferextendload = new List<object> { };
             buffer.Add(bufferextendload);
-            List<string> bufferdifferencestroke = new List<string> { };
+            List<object> bufferdifferencestroke = new List<object> { };
             buffer.Add(bufferdifferencestroke);
-            List<string> bufferdifferenceload = new List<string> { };
+            List<object> bufferdifferenceload = new List<object> { };
             buffer.Add(bufferdifferenceload);
 
             try
@@ -1269,10 +1252,10 @@ namespace LIBEXCELMANIPULATOR
                 {
                     for (int iv = 0; iv < (_cellRealtimeStep3VarMap.Count); iv++)
                     {
-                        List<string> scope = new List<string>();
+                        List<object> scope = new List<object>();
                         for (int ivy = 0; ivy < (_cellRealtimeStep3VarMap[iv].RowCount() - 1); ivy++)
                         {
-                            scope.Add(_cellRealtimeStep3VarMap[iv].Row(ivy + 1).ToString());
+                            scope.Add(_cellRealtimeStep3VarMap[iv].Row(ivy + 1).As<Object>());
                         }
                         buffer.Add(scope);
                     }
@@ -1287,22 +1270,22 @@ namespace LIBEXCELMANIPULATOR
     {
         static void Main(string[] args)
         {
-            EXCELSTREAM MasterFile1 = new EXCELSTREAM("MASTER");
-            EXCELSTREAM RealtimeFile1 = new EXCELSTREAM("REALTIME");
+            //EXCELSTREAM MasterFile1 = new EXCELSTREAM("MASTER");
+            //EXCELSTREAM RealtimeFile1 = new EXCELSTREAM("REALTIME");
 
-            MasterFile1.setModelName("KAYABA1");
-            MasterFile1.setParameterStep1doublediscrete(990.568, 1);
-            MasterFile1.FilePrint("TestMaster1.xlsx");
-            Console.WriteLine(MasterFile1.getModelName());
-            Console.WriteLine(MasterFile1.getParameterStep1doublediscrete(1));
+            //MasterFile1.setModelName("KAYABA1");
+            //MasterFile1.setParameterStep1doublediscrete(990.568, 1);
+            //MasterFile1.FilePrint("TestMaster1.xlsx");
+            //Console.WriteLine(MasterFile1.getModelName());
+            //Console.WriteLine(MasterFile1.getParameterStep1doublediscrete(1));
 
-            RealtimeFile1.setModelName("KAYABA2");
-            RealtimeFile1.setParameterStep1doublediscrete(677.568, 1);
-            RealtimeFile1.FilePrint("TestRealtime1.xlsx");
-            Console.WriteLine(RealtimeFile1.getModelName());
-            Console.WriteLine(RealtimeFile1.getParameterStep1doublediscrete(1));
+            //RealtimeFile1.setModelName("KAYABA2");
+            //RealtimeFile1.setParameterStep1doublediscrete(677.568, 1);
+            //RealtimeFile1.FilePrint("TestRealtime1.xlsx");
+            //Console.WriteLine(RealtimeFile1.getModelName());
+            //Console.WriteLine(RealtimeFile1.getParameterStep1doublediscrete(1));
 
-            Console.ReadKey();
+            //Console.ReadKey();
         }
     }
 }
