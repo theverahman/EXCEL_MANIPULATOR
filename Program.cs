@@ -47,6 +47,8 @@ namespace LIBEXCELMANIPULATOR
         protected IXLCell? _cellMasterMinute;
         protected IXLCell? _cellMasterSecond;
 
+        protected IXLRange? _cellNGLABEL;
+
         void _initMasterModelTableVarMap()
         {
             _cellMasterModelName = _rangeMasterModelTable.Cell(1, 2);
@@ -759,7 +761,7 @@ namespace LIBEXCELMANIPULATOR
 
         public XLBLUEPRINT()
         {
-            _mastering = _XLblueprint.AddWorksheet("Master Blueprint");
+            _mastering = _XLblueprint.AddWorksheet("Master DATA");
             _rangeMasterModelTable = _mastering.Range("A1:G3");
             formattingModelTable(ref _rangeMasterModelTable);
             _initMasterModelTableVarMap();
@@ -780,7 +782,8 @@ namespace LIBEXCELMANIPULATOR
             //_rangeMasterStep4
             //_rangeMasterStep5
 
-            _realtime = _XLblueprint.AddWorksheet("Realtime Blueprint");
+            _realtime = _XLblueprint.AddWorksheet("Realtime DATA");
+            _cellNGLABEL = _realtime.Range("I2:J3");
             _rangeRealtimeModelTable = _realtime.Range("A1:G3");
             formattingModelTable(ref _rangeRealtimeModelTable);
             _initRealtimeModelTableVarMap();
@@ -1263,6 +1266,59 @@ namespace LIBEXCELMANIPULATOR
             }
             catch { }
             return buffer;
+        }
+
+        public void SET_LABEL_NG()
+        {
+            _cellNGLABEL.Merge();
+            _cellNGLABEL.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+            _cellNGLABEL.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+            _cellNGLABEL.Style.Fill.SetBackgroundColor(XLColor.Red);
+            _cellNGLABEL.Style.Font.SetBold(true);
+            _cellNGLABEL.Style.Font.SetFontSize(24);
+            _cellNGLABEL.SetValue("NG");
+        }
+
+    public void STEP1_MAXLOAD_NG_SET()
+        {
+            _cellMaxLoad.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+            _cellMaxLoad.Style.Border.SetOutsideBorderColor(XLColor.Red);
+        }
+
+        public void STEP2_COMP_REF_NG_SET()
+        {
+            _cellStep2CompLoadRef.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+            _cellStep2CompLoadRef.Style.Border.SetOutsideBorderColor(XLColor.Red);
+        }
+
+        public void STEP2_COMP_GRAPH_NG_SET()
+        {
+            _cellRealtimeStep2CompStroke.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+            _cellRealtimeStep2CompStroke.Style.Border.SetOutsideBorderColor(XLColor.Red);
+            _cellRealtimeStep2CompLoad.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+            _cellRealtimeStep2CompLoad.Style.Border.SetOutsideBorderColor(XLColor.Red);
+        }
+
+        public void STEP2_EXTN_REF_NG_SET()
+        {
+            _cellStep2ExtnLoadRef.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+            _cellStep2ExtnLoadRef.Style.Border.SetOutsideBorderColor(XLColor.Red);
+        }
+
+        public void STEP2_EXTN_GRAPH_NG_SET()
+        {
+            _cellRealtimeStep2ExtnStroke.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+            _cellRealtimeStep2ExtnStroke.Style.Border.SetOutsideBorderColor(XLColor.Red);
+            _cellRealtimeStep2ExtnLoad.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+            _cellRealtimeStep2ExtnLoad.Style.Border.SetOutsideBorderColor(XLColor.Red);
+        }
+
+        public void STEP2_DIFF_GRAPH_NG_SET()
+        {
+            _cellRealtimeStep2DiffStroke.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+            _cellRealtimeStep2DiffStroke.Style.Border.SetOutsideBorderColor(XLColor.Red);
+            _cellRealtimeStep2DiffLoad.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+            _cellRealtimeStep2DiffLoad.Style.Border.SetOutsideBorderColor(XLColor.Red);
         }
     }
 
