@@ -60,9 +60,9 @@ namespace LIBEXCELMANIPULATOR
             _cellMasterSecond = _rangeMasterModelTable.Cell(3, 6);
 
             _cellMasterModelTableVarMap.Add(_cellMasterModelName);
-            _cellMasterModelTableVarMap.Add(_cellMasterDay);
-            _cellMasterModelTableVarMap.Add(_cellMasterMonth);
             _cellMasterModelTableVarMap.Add(_cellMasterYear);
+            _cellMasterModelTableVarMap.Add(_cellMasterMonth);
+            _cellMasterModelTableVarMap.Add(_cellMasterDay);
             _cellMasterModelTableVarMap.Add(_cellMasterHour);
             _cellMasterModelTableVarMap.Add(_cellMasterMinute);
             _cellMasterModelTableVarMap.Add(_cellMasterSecond);
@@ -269,9 +269,9 @@ namespace LIBEXCELMANIPULATOR
             _cellRealtimeSecond = _rangeRealtimeModelTable.Cell(3, 6);
 
             _cellRealtimeModelTableVarMap.Add(_cellRealtimeModelName);
-            _cellRealtimeModelTableVarMap.Add(_cellRealtimeDay);
-            _cellRealtimeModelTableVarMap.Add(_cellRealtimeMonth);
             _cellRealtimeModelTableVarMap.Add(_cellRealtimeYear);
+            _cellRealtimeModelTableVarMap.Add(_cellRealtimeMonth);
+            _cellRealtimeModelTableVarMap.Add(_cellRealtimeDay);
             _cellRealtimeModelTableVarMap.Add(_cellRealtimeHour);
             _cellRealtimeModelTableVarMap.Add(_cellRealtimeMinute);
             _cellRealtimeModelTableVarMap.Add(_cellRealtimeSecond);
