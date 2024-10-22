@@ -874,18 +874,18 @@ namespace LIBEXCELMANIPULATOR
             catch { return " "; }
         }
 
-        public int setDateTime(List<Object> buffer)
+        public int setDateTime(List<String> buffer)
         {
             try
             {
                 if (_filemode == 1)
                 {
-                    for (int i = 0; i < 6; i++) { var sbuff = Convert.ChangeType(buffer[i], buffer[i].GetType()); _cellRealtimeModelTableVarMap[i+1].SetValue((XLCellValue)sbuff); }
+                    for (int i = 0; i < 6; i++) { var sbuff = buffer[i].ToString(); _cellRealtimeModelTableVarMap[i+1].SetValue((XLCellValue)sbuff); }
                 }
                 
                 else if (_filemode == 0)
                 {
-                    for (int i = 0; i < 6; i++) { var sbuff = Convert.ChangeType(buffer[i], buffer[i].GetType()); _cellMasterModelTableVarMap[i + 1].SetValue((XLCellValue)sbuff); }
+                    for (int i = 0; i < 6; i++) { var sbuff = buffer[i].ToString(); _cellMasterModelTableVarMap[i + 1].SetValue((XLCellValue)sbuff); }
                 }
                 return 1;
             }
@@ -959,11 +959,13 @@ namespace LIBEXCELMANIPULATOR
                     for (int i = 0; i < _cellRealtimeStep1ParamVarMap.Count; i++) 
                     { 
                         var sbuff = Convert.ChangeType(buffobj[i], buffobj[i].GetType());
-                        Int32 check_int = new Int32();
+                        Int32 check_int32 = new Int32();
+                        Int16 check_int16 = new Int16();
                         Single check_float = new Single();
-                        if (sbuff.GetType() == check_int.GetType())
+
+                        if (sbuff.GetType() != check_float.GetType())
                         {
-                            _cellRealtimeStep1ParamVarMap[i].SetValue((Int32)sbuff);
+                            _cellRealtimeStep1ParamVarMap[i].SetValue((Single)Convert.ToSingle(sbuff));
                         }
                         else if (sbuff.GetType() == check_float.GetType())
                         {
@@ -1013,9 +1015,9 @@ namespace LIBEXCELMANIPULATOR
                         var sbuff = Convert.ChangeType(buffobj[i], buffobj[i].GetType());
                         Int32 check_int = new Int32();
                         Single check_float = new Single();
-                        if (sbuff.GetType() == check_int.GetType())
+                        if (sbuff.GetType() != check_float.GetType())
                         {
-                            _cellRealtimeStep2345ParamVarMap[i].SetValue((Int32)sbuff);
+                            _cellRealtimeStep2345ParamVarMap[i].SetValue((Single)Convert.ToSingle(sbuff));
                         }
                         else if (sbuff.GetType() == check_float.GetType())
                         {
@@ -1159,13 +1161,13 @@ namespace LIBEXCELMANIPULATOR
             return buffer;
         }
 
-        public int setRealtimeJudgement<T>(List<T> buffer)
+        public int setRealtimeJudgement<Single>(List<Single> buffer)
         {
             try
             {
                 if (_filemode == 1)
                 {
-                    for (int i = 0; i < _cellRealtimeJudgementVarMap.Count; i++) { _cellRealtimeJudgementVarMap[i].SetValue((XLCellValue)Convert.ChangeType(buffer[i], buffer[i].GetType())); }
+                    for (int i = 0; i < _cellRealtimeJudgementVarMap.Count; i++) { _cellRealtimeJudgementVarMap[i].SetValue((float)Convert.ToSingle(buffer[i])); }
                 }
                 return 1;
             }
