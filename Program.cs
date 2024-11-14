@@ -486,28 +486,28 @@ namespace LIBEXCELMANIPULATOR
             {
                 new object[] { "Step2 Master Data" },
                 new object[] { "Compress" ," " ," " ," " ,"Extension" ," " ," " ," " ,"Difference" ," " ," " ," "},
-                new object[] { "Stroke", "Master", "Lower", "Upper", "Stroke", "Master", "Lower", "Upper", "Stroke", "Master", "Lower", "Upper" }
+                new object[] { "Stroke", "Load", "Lower", "Upper", "Stroke", "Load", "Lower", "Upper", "Stroke", "Load", "Lower", "Upper" }
             };
 
         List<object[]> blueprintMasterStep3 = new List<object[]>
             {
                 new object[] { "Step3 Master Data" },
                 new object[] { "Compress" ," " ," " ," " ,"Extension" ," " ," " ," " ,"Difference" ," " ," " ," "},
-                new object[] { "Stroke", "Master", "Lower", "Upper", "Stroke", "Master", "Lower", "Upper", "Stroke", "Master", "Lower", "Upper" }
+                new object[] { "Stroke", "Load", "Lower", "Upper", "Stroke", "Load", "Lower", "Upper", "Stroke", "Load", "Lower", "Upper" }
             };
 
         List<object[]> blueprintMasterStep4 = new List<object[]>
             {
                 new object[] { "Step4 Master Data" },
                 new object[] { "Compress" ," " ," " ," " ,"Extension" ," " ," " ," " ,"Difference" ," " ," " ," "},
-                new object[] { "Stroke", "Master", "Lower", "Upper", "Stroke", "Master", "Lower", "Upper", "Stroke", "Master", "Lower", "Upper" }
+                new object[] { "Stroke", "Load", "Lower", "Upper", "Stroke", "Load", "Lower", "Upper", "Stroke", "Load", "Lower", "Upper" }
             };
 
         List<object[]> blueprintMasterStep5 = new List<object[]>
             {
                 new object[] { "Step5 Master Data" },
                 new object[] { "Compress" ," " ," " ," " ,"Extension" ," " ," " ," " ,"Difference" ," " ," " ," "},
-                new object[] { "Stroke", "Master", "Lower", "Upper", "Stroke", "Master", "Lower", "Upper", "Stroke", "Master", "Lower", "Upper" }
+                new object[] { "Stroke", "Load", "Lower", "Upper", "Stroke", "Load", "Lower", "Upper", "Stroke", "Load", "Lower", "Upper" }
             };
 
         List<object[]> blueprintRealtimeJudgement = new List<object[]>
