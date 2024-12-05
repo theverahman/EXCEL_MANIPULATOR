@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using ClosedXML.Report.Utils;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace LIBEXCELMANIPULATOR
 {
@@ -18,6 +20,7 @@ namespace LIBEXCELMANIPULATOR
         protected XLWorkbook? _XLblueprint = new XLWorkbook();
         protected IXLWorksheet? _mastering;
         protected IXLWorksheet? _realtime;
+        protected IXLWorksheet? _realtimeLogBuffer;
 
         protected IXLRange? _rangeMasterModelTable;
         protected IXLRange? _rangeMasterStep1Param;
@@ -47,7 +50,11 @@ namespace LIBEXCELMANIPULATOR
         protected IXLCell? _cellMasterMinute;
         protected IXLCell? _cellMasterSecond;
 
+        protected IXLRange? _rangeNGLABEL;
         protected IXLRange? _cellNGLABEL;
+
+        protected IXLRange? _rangeNGLABELLogBuffer;
+        protected IXLRange? _cellNGLABELLogBuffer;
 
         void _initMasterModelTableVarMap()
         {
@@ -783,7 +790,10 @@ namespace LIBEXCELMANIPULATOR
             //_rangeMasterStep5
 
             _realtime = _XLblueprint.AddWorksheet("Realtime DATA");
-            _cellNGLABEL = _realtime.Range("I2:J3");
+            _rangeNGLABEL = _realtime.Range("I2:J3");
+            _rangeNGLABEL.Merge();
+            _cellNGLABEL = _rangeNGLABEL;
+            
             _rangeRealtimeModelTable = _realtime.Range("A1:G3");
             formattingModelTable(ref _rangeRealtimeModelTable);
             _initRealtimeModelTableVarMap();
@@ -799,6 +809,34 @@ namespace LIBEXCELMANIPULATOR
             _rangeRealtimeDataHeader = _realtime.Range("A24:M24");
             formattingRealtimeDataHeader(ref _rangeRealtimeDataHeader);
             _rangeRealtimeStep2 = _realtime.Range("A25:F229");
+            formattingRealtimeStep2(ref _rangeRealtimeStep2);
+            _initRealtimeStep2VarMap();
+            _rangeRealtimeStep3 = _realtime.Range("H25:M229");
+            formattingRealtimeStep3(ref _rangeRealtimeStep3);
+            _initRealtimeStep3VarMap();
+            //_rangeRealtimeStep4
+            //_rangeRealtimeStep5
+
+            _realtimeLogBuffer = _XLblueprint.AddWorksheet("Realtime DATA");
+            _rangeNGLABELLogBuffer = _realtimeLogBuffer.Range("I2:J3");
+            _rangeNGLABELLogBuffer.Merge();
+            _cellNGLABELLogBuffer = _rangeNGLABELLogBuffer;
+
+            _rangeRealtimeModelTable = _realtimeLogBuffer.Range("A1:G3");
+            formattingModelTable(ref _rangeRealtimeModelTable);
+            _initRealtimeModelTableVarMap();
+            _rangeRealtimeStep1Param = _realtimeLogBuffer.Range("A6:D12");
+            formattingStep1Param(ref _rangeRealtimeStep1Param);
+            _initRealtimeStep1ParamVarMap();
+            _rangeRealtimeStep2345Param = _realtimeLogBuffer.Range("F6:M16");
+            formattingStep2345Param(ref _rangeRealtimeStep2345Param);
+            _initRealtimeStep2345ParamVarMap();
+            _rangeRealtimeJudgement = _realtimeLogBuffer.Range("A18:G22");
+            formattingRealtimeJudgement(ref _rangeRealtimeJudgement);
+            _initRealtimeJudgementVarMap();
+            _rangeRealtimeDataHeader = _realtimeLogBuffer.Range("A24:M24");
+            formattingRealtimeDataHeader(ref _rangeRealtimeDataHeader);
+            _rangeRealtimeStep2 = _realtimeLogBuffer.Range("A25:F229");
             formattingRealtimeStep2(ref _rangeRealtimeStep2);
             _initRealtimeStep2VarMap();
             _rangeRealtimeStep3 = _realtime.Range("H25:M229");
@@ -845,10 +883,72 @@ namespace LIBEXCELMANIPULATOR
             catch { return 0; }
         }
 
-        public int FileRead(ref XLWorkbook wbObject, string filename)
+        public int FileReadMaster(string filename)
         {
-            try { wbObject = new XLWorkbook(filename); return 1; }
-            catch { return 0; }
+            XLWorkbook wbObject;
+            IXLWorksheet wsObject;
+            IXLRange rangeObject;
+            IXLRange rangeReadMaster;
+
+            try
+            {
+                using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    wbObject = new XLWorkbook(filename);
+                    wsObject = wbObject.Worksheet("Master DATA");
+                    rangeObject = wsObject.Range("A1", "Z225");
+
+                    rangeReadMaster = _mastering.Range("A1", "Z225");
+
+                    foreach (var row in rangeObject.Rows())
+                    {
+                        foreach (var cell in row.Cells())
+                        {
+                            rangeReadMaster.Cell(cell.Address.RowNumber, cell.Address.ColumnNumber).Value = cell.Value;
+                        }
+                    }
+                }
+
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public int FileReadRealtime(string filename)
+        {
+            XLWorkbook wbObject;
+            IXLWorksheet wsObject;
+            IXLRange rangeObject;
+            IXLRange rangeReadRealtime;
+
+            try
+            {
+                using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    wbObject = new XLWorkbook(filename);
+                    wsObject = wbObject.Worksheet("Master DATA");
+                    rangeObject = wsObject.Range("A1", "Z225");
+
+                    rangeReadRealtime = _realtime.Range("A1", "Z225");
+
+                    foreach (var row in rangeObject.Rows())
+                    {
+                        foreach (var cell in row.Cells())
+                        {
+                            rangeReadRealtime.Cell(cell.Address.RowNumber, cell.Address.ColumnNumber).Value = cell.Value;
+                        }
+                    }
+                }
+
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
 
@@ -1058,25 +1158,13 @@ namespace LIBEXCELMANIPULATOR
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < (_cellMasterStep2VarMap.Count - 1); iv++)
+                    for (int iv = 0; iv < (_cellMasterStep2VarMap.Count); iv++)
                     {
                         List<Object?> scope = buffer[iv].ConvertAll(x => (Object)x);
-
-                        if (scope.Count > _cellMasterStep2VarMap[iv].RowCount() - 1)
+                        for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
                         {
-                            for (int ivy = 0; ivy < (_cellMasterStep2VarMap[iv].RowCount() - 1); ivy++)
-                            {
-                                _cellMasterStep2VarMap[iv].Row(ivy + 1).SetValue((XLCellValue)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
-                            }
+                            _cellMasterStep2VarMap[iv].Row(ivy + 1).SetValue((Single)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
                         }
-                        else if (scope.Count < _cellMasterStep2VarMap[iv].RowCount() - 1)
-                        {
-                            for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
-                            {
-                                _cellMasterStep2VarMap[iv].Row(ivy + 1).SetValue((XLCellValue)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
-                            }
-                        }
-
                     }
                 }
                 return 1;
@@ -1087,7 +1175,7 @@ namespace LIBEXCELMANIPULATOR
         public List<List<object>> getMasterStep2()
         {
             List<List<object>> buffer = new List<List<object>> { };
-            
+
             try
             {
                 if (_filemode == 0)
@@ -1116,21 +1204,10 @@ namespace LIBEXCELMANIPULATOR
                     for (int iv = 0; iv < (_cellMasterStep3VarMap.Count - 1); iv++)
                     {
                         List<Object?> scope = buffer[iv].ConvertAll(x => (Object)x);
-                        if (scope.Count > _cellMasterStep3VarMap[iv].RowCount() - 1)
+                        for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
                         {
-                            for (int ivy = 0; ivy < (_cellMasterStep3VarMap[iv].RowCount() - 1); ivy++)
-                            {
-                                _cellMasterStep3VarMap[iv].Row(ivy + 1).SetValue((XLCellValue)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
-                            }
+                            _cellMasterStep3VarMap[iv].Row(ivy + 1).SetValue((Single)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
                         }
-                        else if (scope.Count < _cellMasterStep3VarMap[iv].RowCount() - 1)
-                        {
-                            for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
-                            {
-                                _cellMasterStep3VarMap[iv].Row(ivy + 1).SetValue((XLCellValue)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
-                            }
-                        }
-                        
                     }
                 }
                 return 1;
@@ -1161,6 +1238,7 @@ namespace LIBEXCELMANIPULATOR
             return buffer;
         }
 
+
         public int setRealtimeJudgement<Single>(List<Single> buffer)
         {
             try
@@ -1190,7 +1268,7 @@ namespace LIBEXCELMANIPULATOR
 
         public int setRealtimeStep2<T>(List<List<T>> buffer)
         {
-            //try
+            try
             {
                 if (_filemode == 1)
                 {
@@ -1205,7 +1283,7 @@ namespace LIBEXCELMANIPULATOR
                 }
                 return 1;
             }
-            //catch { return 0; }
+            catch { return 0; }
         }
 
         public List<List<object>> getRealtimeStep2()
@@ -1245,7 +1323,7 @@ namespace LIBEXCELMANIPULATOR
 
         public int setRealtimeStep3<T>(List<List<T>> buffer)
         {
-            //try
+            try
             {
                 if (_filemode == 1)
                 {
@@ -1254,13 +1332,13 @@ namespace LIBEXCELMANIPULATOR
                         List<Object?> scope = buffer[iv].ConvertAll(x => (Object)x);
                         for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
                         {
-                            _cellRealtimeStep3VarMap[iv].Row(ivy + 1).SetValue((XLCellValue)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
+                            _cellRealtimeStep3VarMap[iv].Row(ivy + 1).SetValue((Single)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
                         }
                     }
                 }
                 return 1;
             }
-            //catch { return 0; }
+            catch { return 0; }
         }
 
         public List<List<object>> getRealtimeStep3()
@@ -1298,9 +1376,23 @@ namespace LIBEXCELMANIPULATOR
             return buffer;
         }
 
+        public void RESET_LABEL_NG()
+        {
+            _cellNGLABEL.SetValue("");
+            _cellNGLABEL.Style.Fill.SetBackgroundColor(XLColor.Transparent);
+            _cellMaxLoad.Style.Border.SetOutsideBorderColor(XLColor.Black);
+            _cellStep2CompLoadRef.Style.Border.SetOutsideBorderColor(XLColor.Black);
+            _cellRealtimeStep2CompStroke.Style.Border.SetOutsideBorderColor(XLColor.Black);
+            _cellRealtimeStep2CompLoad.Style.Border.SetOutsideBorderColor(XLColor.Black);
+            _cellStep2ExtnLoadRef.Style.Border.SetOutsideBorderColor(XLColor.Black);
+            _cellRealtimeStep2ExtnStroke.Style.Border.SetOutsideBorderColor(XLColor.Black);
+            _cellRealtimeStep2ExtnLoad.Style.Border.SetOutsideBorderColor(XLColor.Black);
+            _cellRealtimeStep2DiffStroke.Style.Border.SetOutsideBorderColor(XLColor.Black);
+            _cellRealtimeStep2DiffLoad.Style.Border.SetOutsideBorderColor(XLColor.Black);
+        }
+
         public void SET_LABEL_NG()
         {
-            _cellNGLABEL.Merge();
             _cellNGLABEL.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
             _cellNGLABEL.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
             _cellNGLABEL.Style.Fill.SetBackgroundColor(XLColor.Red);
@@ -1361,15 +1453,112 @@ namespace LIBEXCELMANIPULATOR
 
             //MasterFile1.setModelName("KAYABA1");
             //MasterFile1.setParameterStep1doublediscrete(990.568, 1);
-            //MasterFile1.FilePrint("TestMaster1.xlsx");
-            //Console.WriteLine(MasterFile1.getModelName());
-            //Console.WriteLine(MasterFile1.getParameterStep1doublediscrete(1));
+            //MasterFile1.SET_LABEL_NG();
 
-            //RealtimeFile1.setModelName("KAYABA2");
-            //RealtimeFile1.setParameterStep1doublediscrete(677.568, 1);
-            //RealtimeFile1.FilePrint("TestRealtime1.xlsx");
-            //Console.WriteLine(RealtimeFile1.getModelName());
-            //Console.WriteLine(RealtimeFile1.getParameterStep1doublediscrete(1));
+            /*
+            XLWorkbook wbObjectTest;
+            IXLWorksheet wsObjectTest;
+            IXLRange rangeObjectTest;
+            IXLRange rangeObjectModelNameTest;
+            IXLCell cellObjectStrokeTest;
+
+            Double datatest1;
+            String datatest1a;
+            String datatest2;
+
+            XLWorkbook wbCopyTest;
+            IXLWorksheet wsCopyTest;
+            IXLRange rangeCopyTest;
+            IXLRange rangeCopyModelNameTest;
+            IXLRange rangeCopyStrokeTest;
+            IXLCell cellCopyStrokeTest;
+            */
+
+
+            /*
+            var excelApp = new Excel.Application();
+            Excel.Workbook interopWorkbook = null;
+
+            wbObjectTest = new XLWorkbook();
+            wsObjectTest = wbObjectTest.AddWorksheet("Master DATA");
+
+            // Attempt to get the workbook by name
+            interopWorkbook = excelApp.Workbooks["TestMaster1.xlsx"];
+
+            // Access the first worksheet
+            Excel.Worksheet interopWorksheet = (Excel.Worksheet)interopWorkbook.Worksheets[1];
+
+            // Read data from the Interop worksheet and write to ClosedXML worksheet
+            Excel.Range usedRange = interopWorksheet.UsedRange;
+            for (int row = 1; row <= usedRange.Rows.Count; row++)
+            {
+                for (int col = 1; col <= usedRange.Columns.Count; col++)
+                {
+                    // Get the value from the Interop worksheet
+                    var value = usedRange.Cells[row, col].Value;
+
+                    // Set the value in the ClosedXML worksheet
+                    wsObjectTest.Cell(row, col).Value = value;
+                }
+            }
+            */
+
+            //List<object> parseObjectTest = new List<object>();
+
+            /*
+
+            FileStream stream = new FileStream("TestMaster1.xlsx", FileMode.Open, FileAccess.Read, FileShare.Read);
+
+            wbObjectTest = new XLWorkbook(stream);
+            wsObjectTest = wbObjectTest.Worksheet("Master DATA");
+            rangeObjectTest = wsObjectTest.Range("A1", "Z225");
+
+            //rangeObjectModelNameTest = wsObjectTest.Range("A1:G3");
+            //cellObjectStrokeTest = wsObjectTest.Cell("D8");
+
+            wbCopyTest = new XLWorkbook();
+            wsCopyTest = wbCopyTest.AddWorksheet("Master DATA");
+            rangeCopyTest = wsCopyTest.Range("A1", "Z225");
+
+            rangeCopyModelNameTest = wsCopyTest.Range("A1:G3");
+            rangeCopyStrokeTest = wsCopyTest.Range("D8:D8");
+            cellCopyStrokeTest = wsCopyTest.Range("D8:D8").Cell(1,1);
+
+            int startRow = 1;
+
+            foreach (var row in rangeObjectTest.RowsUsed())
+            {
+                // Loop through each cell in the row
+                foreach (var cell in row.Cells())
+                {
+                    rangeCopyTest.Cell(cell.Address.RowNumber, cell.Address.ColumnNumber).Value = cell.Value;
+                }
+            }
+
+
+            //rangeObjectModelNameTest.FirstCell().TryGetValue<string>(out datatest2);
+            //cellObjectStrokeTest.TryGetValue<double>(out datatest1);
+
+            rangeCopyModelNameTest.Cell(1, 2).TryGetValue<string>(out datatest2);
+            cellCopyStrokeTest.TryGetValue<double>(out datatest1);
+            
+            Console.WriteLine(datatest2);
+            Console.WriteLine(datatest1);
+            */
+
+            /*
+            MasterFile1.FileReadMaster("TestMaster1.xlsx");
+            Console.WriteLine(MasterFile1.getModelName());
+            Console.WriteLine(MasterFile1.getParameterStep1doublediscrete(1));
+
+
+            RealtimeFile1.setModelName("KAYABA2");
+            RealtimeFile1.setParameterStep1doublediscrete(677.568, 1);
+            RealtimeFile1.RESET_LABEL_NG();
+            RealtimeFile1.FilePrint("TestRealtime1.xlsx");
+            Console.WriteLine(RealtimeFile1.getModelName());
+            Console.WriteLine(RealtimeFile1.getParameterStep1doublediscrete(1));
+            */
 
             //Console.ReadKey();
         }
