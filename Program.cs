@@ -817,6 +817,7 @@ namespace LIBEXCELMANIPULATOR
             //_rangeRealtimeStep4
             //_rangeRealtimeStep5
 
+            /*
             _realtimeLogBuffer = _XLblueprint.AddWorksheet("Realtime DATA");
             _rangeNGLABELLogBuffer = _realtimeLogBuffer.Range("I2:J3");
             _rangeNGLABELLogBuffer.Merge();
@@ -844,6 +845,7 @@ namespace LIBEXCELMANIPULATOR
             _initRealtimeStep3VarMap();
             //_rangeRealtimeStep4
             //_rangeRealtimeStep5
+            */
         }
 
         public int TemplatePrint(string filename)
