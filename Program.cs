@@ -25,9 +25,12 @@ namespace LIBEXCELMANIPULATOR
         protected IXLRange? _rangeMasterModelTable;
         protected IXLRange? _rangeMasterStep1Param;
         protected IXLRange? _rangeMasterStep2345Param;
-        protected IXLRange? _rangeMasterDataHeader;
-        protected IXLRange? _rangeMasterStep2;
-        protected IXLRange? _rangeMasterStep3;
+        protected IXLRange? _rangeRsideMasterDataHeader;
+        protected IXLRange? _rangeLsideMasterDataHeader;
+        protected IXLRange? _rangeRsideMasterStep2;
+        protected IXLRange? _rangeRsideMasterStep3;
+        protected IXLRange? _rangeLsideMasterStep2;
+        protected IXLRange? _rangeLsideMasterStep3;
         //IXLRange _rangeMasterStep4;
         //IXLRange _rangeMasterStep5;
 
@@ -167,90 +170,170 @@ namespace LIBEXCELMANIPULATOR
             _cellMasterStep2345ParamVarMap.Add(_cellMasterStep3LoadRefTolerance);
         }
 
-        protected List<IXLRange>? _cellMasterStep2VarMap = new List<IXLRange>();
-        protected IXLRange? _cellMasterStep2CompStroke;
-        protected IXLRange? _cellMasterStep2CompLoad;
-        protected IXLRange? _cellMasterStep2CompLoadLower;
-        protected IXLRange? _cellMasterStep2CompLoadUpper;
-        protected IXLRange? _cellMasterStep2ExtnStroke;
-        protected IXLRange? _cellMasterStep2ExtnLoad;
-        protected IXLRange? _cellMasterStep2ExtnLoadLower;
-        protected IXLRange? _cellMasterStep2ExtnLoadUpper;
-        protected IXLRange? _cellMasterStep2DiffStroke;
-        protected IXLRange? _cellMasterStep2DiffLoad;
-        protected IXLRange? _cellMasterStep2DiffLoadLower;
-        protected IXLRange? _cellMasterStep2DiffLoadUpper;
+        protected List<IXLRange>? _cellRsideMasterStep2VarMap = new List<IXLRange>();
+        protected IXLRange? _cellRsideMasterStep2CompStroke;
+        protected IXLRange? _cellRsideMasterStep2CompLoad;
+        protected IXLRange? _cellRsideMasterStep2CompLoadLower;
+        protected IXLRange? _cellRsideMasterStep2CompLoadUpper;
+        protected IXLRange? _cellRsideMasterStep2ExtnStroke;
+        protected IXLRange? _cellRsideMasterStep2ExtnLoad;
+        protected IXLRange? _cellRsideMasterStep2ExtnLoadLower;
+        protected IXLRange? _cellRsideMasterStep2ExtnLoadUpper;
+        protected IXLRange? _cellRsideMasterStep2DiffStroke;
+        protected IXLRange? _cellRsideMasterStep2DiffLoad;
+        protected IXLRange? _cellRsideMasterStep2DiffLoadLower;
+        protected IXLRange? _cellRsideMasterStep2DiffLoadUpper;
+
+        protected List<IXLRange>? _cellLsideMasterStep2VarMap = new List<IXLRange>();
+        protected IXLRange? _cellLsideMasterStep2CompStroke;
+        protected IXLRange? _cellLsideMasterStep2CompLoad;
+        protected IXLRange? _cellLsideMasterStep2CompLoadLower;
+        protected IXLRange? _cellLsideMasterStep2CompLoadUpper;
+        protected IXLRange? _cellLsideMasterStep2ExtnStroke;
+        protected IXLRange? _cellLsideMasterStep2ExtnLoad;
+        protected IXLRange? _cellLsideMasterStep2ExtnLoadLower;
+        protected IXLRange? _cellLsideMasterStep2ExtnLoadUpper;
+        protected IXLRange? _cellLsideMasterStep2DiffStroke;
+        protected IXLRange? _cellLsideMasterStep2DiffLoad;
+        protected IXLRange? _cellLsideMasterStep2DiffLoadLower;
+        protected IXLRange? _cellLsideMasterStep2DiffLoadUpper;
 
         void _initMasterStep2VarMap()
         {
-            _cellMasterStep2CompStroke = _rangeMasterStep2.Range(4, 1, 205, 1);
-            _cellMasterStep2CompLoad = _rangeMasterStep2.Range(4, 2, 205, 2);
-            _cellMasterStep2CompLoadLower = _rangeMasterStep2.Range(4, 3, 205, 3);
-            _cellMasterStep2CompLoadUpper = _rangeMasterStep2.Range(4, 4, 205, 4);
-            _cellMasterStep2ExtnStroke = _rangeMasterStep2.Range(4, 5, 205, 5);
-            _cellMasterStep2ExtnLoad = _rangeMasterStep2.Range(4, 6, 205, 6);
-            _cellMasterStep2ExtnLoadLower = _rangeMasterStep2.Range(4, 7, 205, 7);
-            _cellMasterStep2ExtnLoadUpper = _rangeMasterStep2.Range(4, 8, 205, 8);
-            _cellMasterStep2DiffStroke = _rangeMasterStep2.Range(4, 9, 205, 9);
-            _cellMasterStep2DiffLoad = _rangeMasterStep2.Range(4, 10, 205, 10);
-            _cellMasterStep2DiffLoadLower = _rangeMasterStep2.Range(4, 11, 205, 11);
-            _cellMasterStep2DiffLoadUpper = _rangeMasterStep2.Range(4, 12, 205, 12);
+            _cellRsideMasterStep2CompStroke = _rangeRsideMasterStep2.Range(4, 1, 205, 1);
+            _cellRsideMasterStep2CompLoad = _rangeRsideMasterStep2.Range(4, 2, 205, 2);
+            _cellRsideMasterStep2CompLoadLower = _rangeRsideMasterStep2.Range(4, 3, 205, 3);
+            _cellRsideMasterStep2CompLoadUpper = _rangeRsideMasterStep2.Range(4, 4, 205, 4);
+            _cellRsideMasterStep2ExtnStroke = _rangeRsideMasterStep2.Range(4, 5, 205, 5);
+            _cellRsideMasterStep2ExtnLoad = _rangeRsideMasterStep2.Range(4, 6, 205, 6);
+            _cellRsideMasterStep2ExtnLoadLower = _rangeRsideMasterStep2.Range(4, 7, 205, 7);
+            _cellRsideMasterStep2ExtnLoadUpper = _rangeRsideMasterStep2.Range(4, 8, 205, 8);
+            _cellRsideMasterStep2DiffStroke = _rangeRsideMasterStep2.Range(4, 9, 205, 9);
+            _cellRsideMasterStep2DiffLoad = _rangeRsideMasterStep2.Range(4, 10, 205, 10);
+            _cellRsideMasterStep2DiffLoadLower = _rangeRsideMasterStep2.Range(4, 11, 205, 11);
+            _cellRsideMasterStep2DiffLoadUpper = _rangeRsideMasterStep2.Range(4, 12, 205, 12);
 
-            _cellMasterStep2VarMap.Add(_cellMasterStep2CompStroke);
-            _cellMasterStep2VarMap.Add(_cellMasterStep2CompLoad);
-            _cellMasterStep2VarMap.Add(_cellMasterStep2CompLoadLower);
-            _cellMasterStep2VarMap.Add(_cellMasterStep2CompLoadUpper);
-            _cellMasterStep2VarMap.Add(_cellMasterStep2ExtnStroke);
-            _cellMasterStep2VarMap.Add(_cellMasterStep2ExtnLoad);
-            _cellMasterStep2VarMap.Add(_cellMasterStep2ExtnLoadLower);
-            _cellMasterStep2VarMap.Add(_cellMasterStep2ExtnLoadUpper);
-            _cellMasterStep2VarMap.Add(_cellMasterStep2DiffStroke);
-            _cellMasterStep2VarMap.Add(_cellMasterStep2DiffLoad);
-            _cellMasterStep2VarMap.Add(_cellMasterStep2DiffLoadLower);
-            _cellMasterStep2VarMap.Add(_cellMasterStep2DiffLoadUpper);
+            _cellRsideMasterStep2VarMap.Add(_cellRsideMasterStep2CompStroke);
+            _cellRsideMasterStep2VarMap.Add(_cellRsideMasterStep2CompLoad);
+            _cellRsideMasterStep2VarMap.Add(_cellRsideMasterStep2CompLoadLower);
+            _cellRsideMasterStep2VarMap.Add(_cellRsideMasterStep2CompLoadUpper);
+            _cellRsideMasterStep2VarMap.Add(_cellRsideMasterStep2ExtnStroke);
+            _cellRsideMasterStep2VarMap.Add(_cellRsideMasterStep2ExtnLoad);
+            _cellRsideMasterStep2VarMap.Add(_cellRsideMasterStep2ExtnLoadLower);
+            _cellRsideMasterStep2VarMap.Add(_cellRsideMasterStep2ExtnLoadUpper);
+            _cellRsideMasterStep2VarMap.Add(_cellRsideMasterStep2DiffStroke);
+            _cellRsideMasterStep2VarMap.Add(_cellRsideMasterStep2DiffLoad);
+            _cellRsideMasterStep2VarMap.Add(_cellRsideMasterStep2DiffLoadLower);
+            _cellRsideMasterStep2VarMap.Add(_cellRsideMasterStep2DiffLoadUpper);
+
+            _cellLsideMasterStep2CompStroke = _rangeLsideMasterStep2.Range(4, 1, 205, 1);
+            _cellLsideMasterStep2CompLoad = _rangeLsideMasterStep2.Range(4, 2, 205, 2);
+            _cellLsideMasterStep2CompLoadLower = _rangeLsideMasterStep2.Range(4, 3, 205, 3);
+            _cellLsideMasterStep2CompLoadUpper = _rangeLsideMasterStep2.Range(4, 4, 205, 4);
+            _cellLsideMasterStep2ExtnStroke = _rangeLsideMasterStep2.Range(4, 5, 205, 5);
+            _cellLsideMasterStep2ExtnLoad = _rangeLsideMasterStep2.Range(4, 6, 205, 6);
+            _cellLsideMasterStep2ExtnLoadLower = _rangeLsideMasterStep2.Range(4, 7, 205, 7);
+            _cellLsideMasterStep2ExtnLoadUpper = _rangeLsideMasterStep2.Range(4, 8, 205, 8);
+            _cellLsideMasterStep2DiffStroke = _rangeLsideMasterStep2.Range(4, 9, 205, 9);
+            _cellLsideMasterStep2DiffLoad = _rangeLsideMasterStep2.Range(4, 10, 205, 10);
+            _cellLsideMasterStep2DiffLoadLower = _rangeLsideMasterStep2.Range(4, 11, 205, 11);
+            _cellLsideMasterStep2DiffLoadUpper = _rangeLsideMasterStep2.Range(4, 12, 205, 12);
+
+            _cellLsideMasterStep2VarMap.Add(_cellLsideMasterStep2CompStroke);
+            _cellLsideMasterStep2VarMap.Add(_cellLsideMasterStep2CompLoad);
+            _cellLsideMasterStep2VarMap.Add(_cellLsideMasterStep2CompLoadLower);
+            _cellLsideMasterStep2VarMap.Add(_cellLsideMasterStep2CompLoadUpper);
+            _cellLsideMasterStep2VarMap.Add(_cellLsideMasterStep2ExtnStroke);
+            _cellLsideMasterStep2VarMap.Add(_cellLsideMasterStep2ExtnLoad);
+            _cellLsideMasterStep2VarMap.Add(_cellLsideMasterStep2ExtnLoadLower);
+            _cellLsideMasterStep2VarMap.Add(_cellLsideMasterStep2ExtnLoadUpper);
+            _cellLsideMasterStep2VarMap.Add(_cellLsideMasterStep2DiffStroke);
+            _cellLsideMasterStep2VarMap.Add(_cellLsideMasterStep2DiffLoad);
+            _cellLsideMasterStep2VarMap.Add(_cellLsideMasterStep2DiffLoadLower);
+            _cellLsideMasterStep2VarMap.Add(_cellLsideMasterStep2DiffLoadUpper);
         }
 
-        protected List<IXLRange>? _cellMasterStep3VarMap = new List<IXLRange>();
-        protected IXLRange? _cellMasterStep3CompStroke;
-        protected IXLRange? _cellMasterStep3CompLoad;
-        protected IXLRange? _cellMasterStep3CompLoadLower;
-        protected IXLRange? _cellMasterStep3CompLoadUpper;
-        protected IXLRange? _cellMasterStep3ExtnStroke;
-        protected IXLRange? _cellMasterStep3ExtnLoad;
-        protected IXLRange? _cellMasterStep3ExtnLoadLower;
-        protected IXLRange? _cellMasterStep3ExtnLoadUpper;
-        protected IXLRange? _cellMasterStep3DiffStroke;
-        protected IXLRange? _cellMasterStep3DiffLoad;
-        protected IXLRange? _cellMasterStep3DiffLoadLower;
-        protected IXLRange? _cellMasterStep3DiffLoadUpper;
+        protected List<IXLRange>? _cellRsideMasterStep3VarMap = new List<IXLRange>();
+        protected IXLRange? _cellRsideMasterStep3CompStroke;
+        protected IXLRange? _cellRsideMasterStep3CompLoad;
+        protected IXLRange? _cellRsideMasterStep3CompLoadLower;
+        protected IXLRange? _cellRsideMasterStep3CompLoadUpper;
+        protected IXLRange? _cellRsideMasterStep3ExtnStroke;
+        protected IXLRange? _cellRsideMasterStep3ExtnLoad;
+        protected IXLRange? _cellRsideMasterStep3ExtnLoadLower;
+        protected IXLRange? _cellRsideMasterStep3ExtnLoadUpper;
+        protected IXLRange? _cellRsideMasterStep3DiffStroke;
+        protected IXLRange? _cellRsideMasterStep3DiffLoad;
+        protected IXLRange? _cellRsideMasterStep3DiffLoadLower;
+        protected IXLRange? _cellRsideMasterStep3DiffLoadUpper;
+
+        protected List<IXLRange>? _cellLsideMasterStep3VarMap = new List<IXLRange>();
+        protected IXLRange? _cellLsideMasterStep3CompStroke;
+        protected IXLRange? _cellLsideMasterStep3CompLoad;
+        protected IXLRange? _cellLsideMasterStep3CompLoadLower;
+        protected IXLRange? _cellLsideMasterStep3CompLoadUpper;
+        protected IXLRange? _cellLsideMasterStep3ExtnStroke;
+        protected IXLRange? _cellLsideMasterStep3ExtnLoad;
+        protected IXLRange? _cellLsideMasterStep3ExtnLoadLower;
+        protected IXLRange? _cellLsideMasterStep3ExtnLoadUpper;
+        protected IXLRange? _cellLsideMasterStep3DiffStroke;
+        protected IXLRange? _cellLsideMasterStep3DiffLoad;
+        protected IXLRange? _cellLsideMasterStep3DiffLoadLower;
+        protected IXLRange? _cellLsideMasterStep3DiffLoadUpper;
 
         void _initMasterStep3VarMap()
         {
-            _cellMasterStep3CompStroke = _rangeMasterStep3.Range(4, 1, 205, 1);
-            _cellMasterStep3CompLoad = _rangeMasterStep3.Range(4, 2, 205, 2);
-            _cellMasterStep3CompLoadLower = _rangeMasterStep3.Range(4, 3, 205, 3);
-            _cellMasterStep3CompLoadUpper = _rangeMasterStep3.Range(4, 4, 205, 4);
-            _cellMasterStep3ExtnStroke = _rangeMasterStep3.Range(4, 5, 205, 5);
-            _cellMasterStep3ExtnLoad = _rangeMasterStep3.Range(4, 6, 205, 6);
-            _cellMasterStep3ExtnLoadLower = _rangeMasterStep3.Range(4, 7, 205, 7);
-            _cellMasterStep3ExtnLoadUpper = _rangeMasterStep3.Range(4, 8, 205, 8);
-            _cellMasterStep3DiffStroke = _rangeMasterStep3.Range(4, 9, 205, 9);
-            _cellMasterStep3DiffLoad = _rangeMasterStep3.Range(4, 10, 205, 10);
-            _cellMasterStep3DiffLoadLower = _rangeMasterStep3.Range(4, 11, 205, 11);
-            _cellMasterStep3DiffLoadUpper = _rangeMasterStep3.Range(4, 12, 205, 12);
+            _cellRsideMasterStep3CompStroke = _rangeRsideMasterStep3.Range(4, 1, 205, 1);
+            _cellRsideMasterStep3CompLoad = _rangeRsideMasterStep3.Range(4, 2, 205, 2);
+            _cellRsideMasterStep3CompLoadLower = _rangeRsideMasterStep3.Range(4, 3, 205, 3);
+            _cellRsideMasterStep3CompLoadUpper = _rangeRsideMasterStep3.Range(4, 4, 205, 4);
+            _cellRsideMasterStep3ExtnStroke = _rangeRsideMasterStep3.Range(4, 5, 205, 5);
+            _cellRsideMasterStep3ExtnLoad = _rangeRsideMasterStep3.Range(4, 6, 205, 6);
+            _cellRsideMasterStep3ExtnLoadLower = _rangeRsideMasterStep3.Range(4, 7, 205, 7);
+            _cellRsideMasterStep3ExtnLoadUpper = _rangeRsideMasterStep3.Range(4, 8, 205, 8);
+            _cellRsideMasterStep3DiffStroke = _rangeRsideMasterStep3.Range(4, 9, 205, 9);
+            _cellRsideMasterStep3DiffLoad = _rangeRsideMasterStep3.Range(4, 10, 205, 10);
+            _cellRsideMasterStep3DiffLoadLower = _rangeRsideMasterStep3.Range(4, 11, 205, 11);
+            _cellRsideMasterStep3DiffLoadUpper = _rangeRsideMasterStep3.Range(4, 12, 205, 12);
 
-            _cellMasterStep3VarMap.Add(_cellMasterStep3CompStroke);
-            _cellMasterStep3VarMap.Add(_cellMasterStep3CompLoad);
-            _cellMasterStep3VarMap.Add(_cellMasterStep3CompLoadLower);
-            _cellMasterStep3VarMap.Add(_cellMasterStep3CompLoadUpper);
-            _cellMasterStep3VarMap.Add(_cellMasterStep3ExtnStroke);
-            _cellMasterStep3VarMap.Add(_cellMasterStep3ExtnLoad);
-            _cellMasterStep3VarMap.Add(_cellMasterStep3ExtnLoadLower);
-            _cellMasterStep3VarMap.Add(_cellMasterStep3ExtnLoadUpper);
-            _cellMasterStep3VarMap.Add(_cellMasterStep3DiffStroke);
-            _cellMasterStep3VarMap.Add(_cellMasterStep3DiffLoad);
-            _cellMasterStep3VarMap.Add(_cellMasterStep3DiffLoadLower);
-            _cellMasterStep3VarMap.Add(_cellMasterStep3DiffLoadUpper);
+            _cellRsideMasterStep3VarMap.Add(_cellRsideMasterStep3CompStroke);
+            _cellRsideMasterStep3VarMap.Add(_cellRsideMasterStep3CompLoad);
+            _cellRsideMasterStep3VarMap.Add(_cellRsideMasterStep3CompLoadLower);
+            _cellRsideMasterStep3VarMap.Add(_cellRsideMasterStep3CompLoadUpper);
+            _cellRsideMasterStep3VarMap.Add(_cellRsideMasterStep3ExtnStroke);
+            _cellRsideMasterStep3VarMap.Add(_cellRsideMasterStep3ExtnLoad);
+            _cellRsideMasterStep3VarMap.Add(_cellRsideMasterStep3ExtnLoadLower);
+            _cellRsideMasterStep3VarMap.Add(_cellRsideMasterStep3ExtnLoadUpper);
+            _cellRsideMasterStep3VarMap.Add(_cellRsideMasterStep3DiffStroke);
+            _cellRsideMasterStep3VarMap.Add(_cellRsideMasterStep3DiffLoad);
+            _cellRsideMasterStep3VarMap.Add(_cellRsideMasterStep3DiffLoadLower);
+            _cellRsideMasterStep3VarMap.Add(_cellRsideMasterStep3DiffLoadUpper);
+
+            _cellLsideMasterStep3CompStroke = _rangeLsideMasterStep3.Range(4, 1, 205, 1);
+            _cellLsideMasterStep3CompLoad = _rangeLsideMasterStep3.Range(4, 2, 205, 2);
+            _cellLsideMasterStep3CompLoadLower = _rangeLsideMasterStep3.Range(4, 3, 205, 3);
+            _cellLsideMasterStep3CompLoadUpper = _rangeLsideMasterStep3.Range(4, 4, 205, 4);
+            _cellLsideMasterStep3ExtnStroke = _rangeLsideMasterStep3.Range(4, 5, 205, 5);
+            _cellLsideMasterStep3ExtnLoad = _rangeLsideMasterStep3.Range(4, 6, 205, 6);
+            _cellLsideMasterStep3ExtnLoadLower = _rangeLsideMasterStep3.Range(4, 7, 205, 7);
+            _cellLsideMasterStep3ExtnLoadUpper = _rangeLsideMasterStep3.Range(4, 8, 205, 8);
+            _cellLsideMasterStep3DiffStroke = _rangeLsideMasterStep3.Range(4, 9, 205, 9);
+            _cellLsideMasterStep3DiffLoad = _rangeLsideMasterStep3.Range(4, 10, 205, 10);
+            _cellLsideMasterStep3DiffLoadLower = _rangeLsideMasterStep3.Range(4, 11, 205, 11);
+            _cellLsideMasterStep3DiffLoadUpper = _rangeLsideMasterStep3.Range(4, 12, 205, 12);
+
+            _cellLsideMasterStep3VarMap.Add(_cellLsideMasterStep3CompStroke);
+            _cellLsideMasterStep3VarMap.Add(_cellLsideMasterStep3CompLoad);
+            _cellLsideMasterStep3VarMap.Add(_cellLsideMasterStep3CompLoadLower);
+            _cellLsideMasterStep3VarMap.Add(_cellLsideMasterStep3CompLoadUpper);
+            _cellLsideMasterStep3VarMap.Add(_cellLsideMasterStep3ExtnStroke);
+            _cellLsideMasterStep3VarMap.Add(_cellLsideMasterStep3ExtnLoad);
+            _cellLsideMasterStep3VarMap.Add(_cellLsideMasterStep3ExtnLoadLower);
+            _cellLsideMasterStep3VarMap.Add(_cellLsideMasterStep3ExtnLoadUpper);
+            _cellLsideMasterStep3VarMap.Add(_cellLsideMasterStep3DiffStroke);
+            _cellLsideMasterStep3VarMap.Add(_cellLsideMasterStep3DiffLoad);
+            _cellLsideMasterStep3VarMap.Add(_cellLsideMasterStep3DiffLoadLower);
+            _cellLsideMasterStep3VarMap.Add(_cellLsideMasterStep3DiffLoadUpper);
         }
 
         //List<IXLCell> _cellMasterStep4VarMap = new List<IXLCell>();
@@ -484,9 +567,14 @@ namespace LIBEXCELMANIPULATOR
                 new object[] { "Comp /Ext Load Reference Tolerance %:", "", "", ""}
             };
 
-        List<object[]> blueprintMasterDataHeader = new List<object[]>
+        List<object[]> blueprintRsideMasterDataHeader = new List<object[]>
             {
-                new object[] { "Master Compress/Extension Recipe Data" }
+                new object[] { "R side Master Compress/Extension Recipe Data" }
+            };
+
+        List<object[]> blueprintLsideMasterDataHeader = new List<object[]>
+            {
+                new object[] { "L side Master Compress/Extension Recipe Data" }
             };
 
         List<object[]> blueprintMasterStep2 = new List<object[]>
@@ -636,9 +724,9 @@ namespace LIBEXCELMANIPULATOR
             wsr.Column(4).Style.Border.SetRightBorder(XLBorderStyleValues.Thick);
         }
 
-        void formattingMasterDataHeader(ref IXLRange wsr)
+        void formattingRsideMasterDataHeader(ref IXLRange wsr)
         {
-            wsr.FirstCell().InsertData(blueprintMasterDataHeader);
+            wsr.FirstCell().InsertData(blueprintRsideMasterDataHeader);
             wsr.Merge();
             wsr.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Bottom);
             wsr.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
@@ -646,7 +734,17 @@ namespace LIBEXCELMANIPULATOR
             wsr.Style.Font.SetUnderline();
         }
 
-        void formattingMasterStep2(ref IXLRange wsr)
+        void formattingLsideMasterDataHeader(ref IXLRange wsr)
+        {
+            wsr.FirstCell().InsertData(blueprintLsideMasterDataHeader);
+            wsr.Merge();
+            wsr.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Bottom);
+            wsr.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+            wsr.Style.Font.SetBold();
+            wsr.Style.Font.SetUnderline();
+        }
+
+        void formattingRsideMasterStep2(ref IXLRange wsr)
         {
             wsr.FirstCell().InsertData(blueprintMasterStep2);
             wsr.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Bottom);
@@ -666,7 +764,47 @@ namespace LIBEXCELMANIPULATOR
             wsr.Column(8).Style.Border.SetRightBorder(XLBorderStyleValues.Thick);
         }
 
-        void formattingMasterStep3(ref IXLRange wsr)
+        void formattingRsideMasterStep3(ref IXLRange wsr)
+        {
+            wsr.FirstCell().InsertData(blueprintMasterStep3);
+            wsr.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Bottom);
+            wsr.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+            wsr.FirstRow().Style.Font.SetBold();
+            wsr.FirstRow().Merge();
+            wsr.Range(2, 1, 2, 4).Merge();
+            wsr.Range(2, 5, 2, 8).Merge();
+            wsr.Range(2, 9, 2, 12).Merge();
+
+            wsr.Style.Border.SetInsideBorder(XLBorderStyleValues.Thin);
+            wsr.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+            wsr.FirstRow().Style.Border.SetBottomBorder(XLBorderStyleValues.Thick);
+            wsr.Row(2).Style.Border.SetBottomBorder(XLBorderStyleValues.Thick);
+            wsr.Row(3).Style.Border.SetBottomBorder(XLBorderStyleValues.Thick);
+            wsr.Column(4).Style.Border.SetRightBorder(XLBorderStyleValues.Thick);
+            wsr.Column(8).Style.Border.SetRightBorder(XLBorderStyleValues.Thick);
+        }
+
+        void formattingLsideMasterStep2(ref IXLRange wsr)
+        {
+            wsr.FirstCell().InsertData(blueprintMasterStep2);
+            wsr.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Bottom);
+            wsr.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+            wsr.FirstRow().Style.Font.SetBold();
+            wsr.FirstRow().Merge();
+            wsr.Range(2, 1, 2, 4).Merge();
+            wsr.Range(2, 5, 2, 8).Merge();
+            wsr.Range(2, 9, 2, 12).Merge();
+
+            wsr.Style.Border.SetInsideBorder(XLBorderStyleValues.Thin);
+            wsr.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+            wsr.FirstRow().Style.Border.SetBottomBorder(XLBorderStyleValues.Thick);
+            wsr.Row(2).Style.Border.SetBottomBorder(XLBorderStyleValues.Thick);
+            wsr.Row(3).Style.Border.SetBottomBorder(XLBorderStyleValues.Thick);
+            wsr.Column(4).Style.Border.SetRightBorder(XLBorderStyleValues.Thick);
+            wsr.Column(8).Style.Border.SetRightBorder(XLBorderStyleValues.Thick);
+        }
+
+        void formattingLsideMasterStep3(ref IXLRange wsr)
         {
             wsr.FirstCell().InsertData(blueprintMasterStep3);
             wsr.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Bottom);
@@ -768,7 +906,9 @@ namespace LIBEXCELMANIPULATOR
 
         public XLBLUEPRINT()
         {
+            //Master Data
             _mastering = _XLblueprint.AddWorksheet("Master DATA");
+            //Common
             _rangeMasterModelTable = _mastering.Range("A1:G3");
             formattingModelTable(ref _rangeMasterModelTable);
             _initMasterModelTableVarMap();
@@ -778,13 +918,28 @@ namespace LIBEXCELMANIPULATOR
             _rangeMasterStep2345Param = _mastering.Range("F6:M16");
             formattingStep2345Param(ref _rangeMasterStep2345Param);
             _initMasterStep2345ParamVarMap();
-            _rangeMasterDataHeader = _mastering.Range("A18:Y18");
-            formattingMasterDataHeader(ref _rangeMasterDataHeader);
-            _rangeMasterStep2 = _mastering.Range("A19:L223");
-            formattingMasterStep2(ref _rangeMasterStep2);
+            //Header R
+            _rangeRsideMasterDataHeader = _mastering.Range("A18:Y18");
+            formattingRsideMasterDataHeader(ref _rangeRsideMasterDataHeader);
+            //Header L
+            _rangeLsideMasterDataHeader = _mastering.Range("AA18:AY18");
+            formattingLsideMasterDataHeader(ref _rangeLsideMasterDataHeader);
+            //Step2 R
+            _rangeRsideMasterStep2 = _mastering.Range("A19:L223");
+            formattingRsideMasterStep2(ref _rangeRsideMasterStep2);
+            //Step2 L
+            _rangeLsideMasterStep2 = _mastering.Range("AA19:AL223");
+            formattingLsideMasterStep2(ref _rangeLsideMasterStep2);
+            //Step2 Init
             _initMasterStep2VarMap();
-            _rangeMasterStep3 = _mastering.Range("N19:Y223");
-            formattingMasterStep3(ref _rangeMasterStep3);
+
+            //Step3 R
+            _rangeRsideMasterStep3 = _mastering.Range("N19:Y223");
+            formattingRsideMasterStep3(ref _rangeRsideMasterStep3);
+            //Step3 L
+            _rangeLsideMasterStep3 = _mastering.Range("AN19:AY223");
+            formattingLsideMasterStep3(ref _rangeLsideMasterStep3);
+            //Step3 Init
             _initMasterStep3VarMap();
             //_rangeMasterStep4
             //_rangeMasterStep5
