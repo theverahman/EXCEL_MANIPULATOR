@@ -1053,9 +1053,9 @@ namespace LIBEXCELMANIPULATOR
                 {
                     wbObject = new XLWorkbook(filename);
                     wsObject = wbObject.Worksheet("Master DATA");
-                    rangeObject = wsObject.Range("A1", "Z225");
+                    rangeObject = wsObject.Range("A1", "AZ225");
 
-                    rangeReadMaster = _mastering.Range("A1", "Z225");
+                    rangeReadMaster = _mastering.Range("A1", "AZ225");
 
                     foreach (var row in rangeObject.Rows())
                     {
@@ -1228,13 +1228,26 @@ namespace LIBEXCELMANIPULATOR
                         {
                             _cellRealtimeStep1ParamVarMap[i].SetValue((Single)sbuff);
                         }
-
-
                     }
                 }
                 else if (_filemode == 0)
                 {
-                    for (int i = 0; i < _cellMasterStep1ParamVarMap.Count; i++) { var sbuff = Convert.ChangeType(buffobj[i], buffobj[i].GetType()); _cellMasterStep1ParamVarMap[i].SetValue((XLCellValue)sbuff); }
+                    for (int i = 0; i < _cellMasterStep1ParamVarMap.Count; i++)
+                    {
+                        var sbuff = Convert.ChangeType(buffobj[i], buffobj[i].GetType());
+                        Int32 check_int32 = new Int32();
+                        Int16 check_int16 = new Int16();
+                        Single check_float = new Single();
+
+                        if (sbuff.GetType() != check_float.GetType())
+                        {
+                            _cellMasterStep1ParamVarMap[i].SetValue((Single)Convert.ToSingle(sbuff));
+                        }
+                        else if (sbuff.GetType() == check_float.GetType())
+                        {
+                            _cellMasterStep1ParamVarMap[i].SetValue((Single)sbuff);
+                        }
+                    }
                 }
                 return 1;
             }
@@ -1284,7 +1297,20 @@ namespace LIBEXCELMANIPULATOR
                 }
                 else if (_filemode == 0)
                 {
-                    for (int i = 0; i < _cellMasterStep2345ParamVarMap.Count; i++) { var sbuff = Convert.ChangeType(buffobj[i], buffobj[i].GetType()); ; _cellMasterStep2345ParamVarMap[i].SetValue((XLCellValue)sbuff); }
+                    for (int i = 0; i < _cellMasterStep2345ParamVarMap.Count; i++)
+                    {
+                        var sbuff = Convert.ChangeType(buffobj[i], buffobj[i].GetType());
+                        Int32 check_int = new Int32();
+                        Single check_float = new Single();
+                        if (sbuff.GetType() != check_float.GetType())
+                        {
+                            _cellMasterStep2345ParamVarMap[i].SetValue((Single)Convert.ToSingle(sbuff));
+                        }
+                        else if (sbuff.GetType() == check_float.GetType())
+                        {
+                            _cellMasterStep2345ParamVarMap[i].SetValue((Single)sbuff);
+                        }
+                    }
                 }
                 return 1;
             }
@@ -1309,18 +1335,18 @@ namespace LIBEXCELMANIPULATOR
             return buffer;
         }
 
-        public int setMasterStep2<T>(List<List<T>> buffer)
+        public int setRsideMasterStep2<T>(List<List<T>> buffer)
         {
             try
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < (_cellMasterStep2VarMap.Count); iv++)
+                    for (int iv = 0; iv < (_cellRsideMasterStep2VarMap.Count); iv++)
                     {
                         List<Object?> scope = buffer[iv].ConvertAll(x => (Object)x);
                         for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
                         {
-                            _cellMasterStep2VarMap[iv].Row(ivy + 1).SetValue((Single)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
+                            _cellRsideMasterStep2VarMap[iv].Row(ivy + 1).SetValue((Single)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
                         }
                     }
                 }
@@ -1329,7 +1355,27 @@ namespace LIBEXCELMANIPULATOR
             catch { return 0; }
         }
 
-        public List<List<object>> getMasterStep2()
+        public int setLsideMasterStep2<T>(List<List<T>> buffer)
+        {
+            try
+            {
+                if (_filemode == 0)
+                {
+                    for (int iv = 0; iv < (_cellLsideMasterStep2VarMap.Count); iv++)
+                    {
+                        List<Object?> scope = buffer[iv].ConvertAll(x => (Object)x);
+                        for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
+                        {
+                            _cellLsideMasterStep2VarMap[iv].Row(ivy + 1).SetValue((Single)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
+                        }
+                    }
+                }
+                return 1;
+            }
+            catch { return 0; }
+        }
+
+        public List<List<object>> getRsideMasterStep2()
         {
             List<List<object>> buffer = new List<List<object>> { };
 
@@ -1337,12 +1383,12 @@ namespace LIBEXCELMANIPULATOR
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < (_cellMasterStep2VarMap.Count - 1); iv++)
+                    for (int iv = 0; iv < (_cellRsideMasterStep2VarMap.Count - 1); iv++)
                     {
                         List<object> scope = new List<object>();
-                        for (int ivy = 0; ivy < (_cellMasterStep2VarMap[iv].RowCount() - 1); ivy++)
+                        for (int ivy = 0; ivy < (_cellRsideMasterStep2VarMap[iv].RowCount() - 1); ivy++)
                         {
-                            scope.Add(_cellMasterStep2VarMap[iv].Row(ivy + 1).As<Object>());
+                            scope.Add(_cellRsideMasterStep2VarMap[iv].Row(ivy + 1).As<Object>());
                         }
                         buffer.Add(scope);
                     }
@@ -1352,18 +1398,41 @@ namespace LIBEXCELMANIPULATOR
             return buffer;
         }
 
-        public int setMasterStep3<T>(List<List<T>> buffer)
+        public List<List<object>> getLsideMasterStep2()
+        {
+            List<List<object>> buffer = new List<List<object>> { };
+
+            try
+            {
+                if (_filemode == 0)
+                {
+                    for (int iv = 0; iv < (_cellLsideMasterStep2VarMap.Count - 1); iv++)
+                    {
+                        List<object> scope = new List<object>();
+                        for (int ivy = 0; ivy < (_cellLsideMasterStep2VarMap[iv].RowCount() - 1); ivy++)
+                        {
+                            scope.Add(_cellLsideMasterStep2VarMap[iv].Row(ivy + 1).As<Object>());
+                        }
+                        buffer.Add(scope);
+                    }
+                }
+            }
+            catch { }
+            return buffer;
+        }
+
+        public int setRsideMasterStep3<T>(List<List<T>> buffer)
         {
             try
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < (_cellMasterStep3VarMap.Count - 1); iv++)
+                    for (int iv = 0; iv < (_cellRsideMasterStep3VarMap.Count - 1); iv++)
                     {
                         List<Object?> scope = buffer[iv].ConvertAll(x => (Object)x);
                         for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
                         {
-                            _cellMasterStep3VarMap[iv].Row(ivy + 1).SetValue((Single)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
+                            _cellRsideMasterStep3VarMap[iv].Row(ivy + 1).SetValue((Single)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
                         }
                     }
                 }
@@ -1372,7 +1441,27 @@ namespace LIBEXCELMANIPULATOR
             catch { return 0; }
         }
 
-        public List<List<object>> getMasterStep3()
+        public int setLsideMasterStep3<T>(List<List<T>> buffer)
+        {
+            try
+            {
+                if (_filemode == 0)
+                {
+                    for (int iv = 0; iv < (_cellLsideMasterStep3VarMap.Count - 1); iv++)
+                    {
+                        List<Object?> scope = buffer[iv].ConvertAll(x => (Object)x);
+                        for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
+                        {
+                            _cellLsideMasterStep3VarMap[iv].Row(ivy + 1).SetValue((Single)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
+                        }
+                    }
+                }
+                return 1;
+            }
+            catch { return 0; }
+        }
+
+        public List<List<object>> getRsideMasterStep3()
         {
             List<List<object>> buffer = new List<List<object>> { };
 
@@ -1380,12 +1469,35 @@ namespace LIBEXCELMANIPULATOR
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < (_cellMasterStep3VarMap.Count - 1); iv++)
+                    for (int iv = 0; iv < (_cellRsideMasterStep3VarMap.Count - 1); iv++)
                     {
                         List<object> scope = new List<object>();
-                        for (int ivy = 0; ivy < (_cellMasterStep3VarMap[iv].RowCount() - 1); ivy++)
+                        for (int ivy = 0; ivy < (_cellRsideMasterStep3VarMap[iv].RowCount() - 1); ivy++)
                         {
-                            scope.Add(_cellMasterStep3VarMap[iv].Row(ivy + 1).As<Object>());
+                            scope.Add(_cellRsideMasterStep3VarMap[iv].Row(ivy + 1).As<Object>());
+                        }
+                        buffer.Add(scope);
+                    }
+                }
+            }
+            catch { }
+            return buffer;
+        }
+
+        public List<List<object>> getLsideMasterStep3()
+        {
+            List<List<object>> buffer = new List<List<object>> { };
+
+            try
+            {
+                if (_filemode == 0)
+                {
+                    for (int iv = 0; iv < (_cellLsideMasterStep3VarMap.Count - 1); iv++)
+                    {
+                        List<object> scope = new List<object>();
+                        for (int ivy = 0; ivy < (_cellLsideMasterStep3VarMap[iv].RowCount() - 1); ivy++)
+                        {
+                            scope.Add(_cellLsideMasterStep3VarMap[iv].Row(ivy + 1).As<Object>());
                         }
                         buffer.Add(scope);
                     }
