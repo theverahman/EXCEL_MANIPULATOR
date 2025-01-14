@@ -24,7 +24,14 @@ namespace LIBEXCELMANIPULATOR
         protected IXLWorksheet? _realtime;
         protected IXLWorksheet? _realtimeLogBuffer;
 
+        protected IXLRange? _rangeNGLABEL;
+        protected IXLRange? _cellNGLABEL;
+
+        protected IXLRange? _rangeNGLABELLogBuffer;
+        protected IXLRange? _cellNGLABELLogBuffer;
+
         protected IXLRange? _rangeMasterModelTable;
+        protected IXLRange? _rangeMasterKYBNUM;
         protected IXLRange? _rangeMasterStep1Param;
         protected IXLRange? _rangeMasterStep2345Param;
         protected IXLRange? _rangeRsideMasterDataHeader;
@@ -37,6 +44,7 @@ namespace LIBEXCELMANIPULATOR
         //IXLRange _rangeMasterStep5;
 
         protected IXLRange? _rangeRealtimeModelTable;
+        protected IXLRange? _rangeRealtimeKYBNUM;
         protected IXLRange? _rangeRealtimeStep1Param;
         protected IXLRange? _rangeRealtimeStep2345Param;
         protected IXLRange? _rangeRealtimeDataHeader;
@@ -48,6 +56,7 @@ namespace LIBEXCELMANIPULATOR
 
         protected List<IXLCell>? _cellMasterModelTableVarMap = new List<IXLCell>();
         protected IXLCell? _cellMasterModelName;
+        protected IXLCell? _cellMasterKYBNUM;
         protected IXLCell? _cellMasterDay;
         protected IXLCell? _cellMasterMonth;
         protected IXLCell? _cellMasterYear;
@@ -55,15 +64,10 @@ namespace LIBEXCELMANIPULATOR
         protected IXLCell? _cellMasterMinute;
         protected IXLCell? _cellMasterSecond;
 
-        protected IXLRange? _rangeNGLABEL;
-        protected IXLRange? _cellNGLABEL;
-
-        protected IXLRange? _rangeNGLABELLogBuffer;
-        protected IXLRange? _cellNGLABELLogBuffer;
-
         void _initMasterModelTableVarMap()
         {
             _cellMasterModelName = _rangeMasterModelTable.Cell(1, 2);
+            _cellMasterKYBNUM = _rangeMasterModelTable.Cell(1, 4);
             _cellMasterDay = _rangeMasterModelTable.Cell(2, 2);
             _cellMasterMonth = _rangeMasterModelTable.Cell(2, 4);
             _cellMasterYear = _rangeMasterModelTable.Cell(2, 6);
@@ -78,6 +82,7 @@ namespace LIBEXCELMANIPULATOR
             _cellMasterModelTableVarMap.Add(_cellMasterHour);
             _cellMasterModelTableVarMap.Add(_cellMasterMinute);
             _cellMasterModelTableVarMap.Add(_cellMasterSecond);
+            _cellMasterModelTableVarMap.Add(_cellMasterKYBNUM);
         }
 
         protected List<IXLCell>? _cellMasterStep1ParamVarMap = new List<IXLCell>();
@@ -343,6 +348,7 @@ namespace LIBEXCELMANIPULATOR
 
         protected List<IXLCell>? _cellRealtimeModelTableVarMap = new List<IXLCell>();
         protected IXLCell? _cellRealtimeModelName;
+        protected IXLCell? _cellRealtimeKYBNUM;
         protected IXLCell? _cellRealtimeDay;
         protected IXLCell? _cellRealtimeMonth;
         protected IXLCell? _cellRealtimeYear;
@@ -353,6 +359,7 @@ namespace LIBEXCELMANIPULATOR
         void _initRealtimeModelTableVarMap()
         {
             _cellRealtimeModelName = _rangeRealtimeModelTable.Cell(1, 2);
+            _cellRealtimeKYBNUM = _rangeRealtimeModelTable.Cell(1, 4);
             _cellRealtimeDay = _rangeRealtimeModelTable.Cell(2, 2);
             _cellRealtimeMonth = _rangeRealtimeModelTable.Cell(2, 4);
             _cellRealtimeYear = _rangeRealtimeModelTable.Cell(2, 6);
@@ -367,6 +374,7 @@ namespace LIBEXCELMANIPULATOR
             _cellRealtimeModelTableVarMap.Add(_cellRealtimeHour);
             _cellRealtimeModelTableVarMap.Add(_cellRealtimeMinute);
             _cellRealtimeModelTableVarMap.Add(_cellRealtimeSecond);
+            _cellRealtimeModelTableVarMap.Add(_cellRealtimeKYBNUM);
         }
 
         protected List<IXLCell>? _cellRealtimeStep1ParamVarMap = new List<IXLCell>();
@@ -538,7 +546,7 @@ namespace LIBEXCELMANIPULATOR
 
         List<object[]> blueprintModelTable = new List<object[]>
             {
-                new object[] { "Model:"},
+                new object[] { "Model:", "", "KYBNUM:"},
                 new object[] { "Date:", "", "Day", "", "Month", "", "Year"},
                 new object[] { "Time:", "", "Hour", "", "Minutes", "", "Second" }
             };
@@ -656,10 +664,15 @@ namespace LIBEXCELMANIPULATOR
             wsr.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
             wsr.FirstColumn().Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
             wsr.FirstColumn().Style.Font.SetBold(true);
+            wsr.FirstColumn().Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+
+            wsr.Cell(1, 3).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
+            wsr.Cell(1, 3).Style.Font.SetBold(true);
+            wsr.Cell(1, 3).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
 
             wsr.Rows(2, 3).Style.Border.SetInsideBorder(XLBorderStyleValues.Thin);
             wsr.Rows(2, 3).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
-            wsr.FirstColumn().Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+            
         }
 
         void formattingStep1Param(ref IXLRange wsr)
@@ -1133,6 +1146,28 @@ namespace LIBEXCELMANIPULATOR
             catch { return " "; }
         }
 
+        public int setKYBNUM(string kybnum)
+        {
+            //try
+            {
+                if (_filemode == 1) { string sbuff = new string(kybnum); _cellRealtimeModelTableVarMap[7].SetValue(sbuff); }
+                else if (_filemode == 0) { string sbuff = new string(kybnum); _cellMasterModelTableVarMap[7].SetValue(sbuff); }
+                return 1;
+            }
+            //catch{ return 0; }
+        }
+
+        public string getKYBNUM()
+        {
+            try
+            {
+                if (_filemode == 1) { return _cellRealtimeModelTableVarMap[7].GetString(); }
+                else if (_filemode == 0) { return _cellMasterModelTableVarMap[7].GetString(); }
+                else { return " "; }
+            }
+            catch { return " "; }
+        }
+
         public int setDateTime(List<String> buffer)
         {
             try
@@ -1257,11 +1292,11 @@ namespace LIBEXCELMANIPULATOR
 
         }
 
-        public List<object> getParameterStep1()
+        public List<float> getParameterStep1()
         {
             double debuff = new double();
             bool b = new bool();
-            List<object> buffer = new List<object> { };
+            List<float> buffer = new List<float> { };
             try
             {
                 if (_filemode == 1)
@@ -1269,7 +1304,7 @@ namespace LIBEXCELMANIPULATOR
                     for (int i = 0; i < _cellRealtimeStep1ParamVarMap.Count; i++) 
                     {
                         b = _cellRealtimeStep1ParamVarMap[i].TryGetValue<double>(out debuff);
-                        buffer.Add(debuff); 
+                        buffer.Add(Convert.ToSingle(debuff)); 
                     }
                 }
                 else if (_filemode == 0)
@@ -1277,7 +1312,7 @@ namespace LIBEXCELMANIPULATOR
                     for (int i = 0; i < _cellMasterStep1ParamVarMap.Count; i++) 
                     {
                         b = _cellMasterStep1ParamVarMap[i].TryGetValue<double>(out debuff);
-                        buffer.Add(debuff); 
+                        buffer.Add(Convert.ToSingle(debuff)); 
                     }
                 }
             }
@@ -1329,11 +1364,11 @@ namespace LIBEXCELMANIPULATOR
             //catch { return 0; }
         }
 
-        public List<object> getParameterStep2345()
+        public List<float> getParameterStep2345()
         {
             double debuff = new double();
             bool b = new bool();
-            List<object> buffer = new List<object> { };
+            List<float> buffer = new List<float> { };
             try
             {
                 if (_filemode == 1)
@@ -1341,7 +1376,7 @@ namespace LIBEXCELMANIPULATOR
                     for (int i = 0; i < _cellRealtimeStep2345ParamVarMap.Count; i++) 
                     {
                         b = _cellRealtimeStep2345ParamVarMap[i].TryGetValue<double>(out debuff);
-                        buffer.Add(debuff); 
+                        buffer.Add(Convert.ToSingle(debuff)); 
                     }
                 }
                 else if (_filemode == 0)
@@ -1349,7 +1384,7 @@ namespace LIBEXCELMANIPULATOR
                     for (int i = 0; i < _cellMasterStep2345ParamVarMap.Count; i++) 
                     {
                         b = _cellMasterStep2345ParamVarMap[i].TryGetValue<double>(out debuff);
-                        buffer.Add(debuff); 
+                        buffer.Add(Convert.ToSingle(debuff)); 
                     }
                 }
             }
@@ -1431,7 +1466,8 @@ namespace LIBEXCELMANIPULATOR
                         List<Object?> scope = buffer[iv].ConvertAll(x => (Object)x);
                         for (int ivy = 0; ivy < (scope.Count - 1); ivy++)
                         {
-                            _cellLsideMasterStep3VarMap[iv].Row(ivy + 1).SetValue((Single)Convert.ChangeType(scope[ivy], scope[ivy].GetType()));
+                            Single sbuff = Convert.ToSingle(scope[ivy]);
+                            _cellLsideMasterStep3VarMap[iv].Row(ivy + 1).SetValue(sbuff);
                         }
                     }
                 }
@@ -1440,11 +1476,11 @@ namespace LIBEXCELMANIPULATOR
             catch { return 0; }
         }
 
-        public List<List<object>> getRsideMasterStep2()
+        public List<List<float>> getRsideMasterStep2()
         {
             double debuff = new double();
             bool b = new bool();
-            List<List<object>> buffer = new List<List<object>> { };
+            List<List<float>> buffer = new List<List<float>> { };
 
             try
             {
@@ -1452,11 +1488,11 @@ namespace LIBEXCELMANIPULATOR
                 {
                     for (int iv = 0; iv < (_cellRsideMasterStep2VarMap.Count - 1); iv++)
                     {
-                        List<object> scope = new List<object>();
+                        List<float> scope = new List<float>();
                         for (int ivy = 0; ivy < (_cellRsideMasterStep2VarMap[iv].RowCount() - 1); ivy++)
                         {
                             b = _cellRsideMasterStep2VarMap[iv].Cell(ivy + 1, 1).TryGetValue<double>(out debuff);
-                            scope.Add(debuff);  
+                            scope.Add(Convert.ToSingle(debuff));  
                         }
                         buffer.Add(scope);
                     }
@@ -1466,11 +1502,11 @@ namespace LIBEXCELMANIPULATOR
             return buffer;
         }
 
-        public List<List<object>> getLsideMasterStep2()
+        public List<List<float>> getLsideMasterStep2()
         {
             double debuff = new double();
             bool b = new bool();
-            List<List<object>> buffer = new List<List<object>> { };
+            List<List<float>> buffer = new List<List<float>> { };
 
             try
             {
@@ -1478,11 +1514,11 @@ namespace LIBEXCELMANIPULATOR
                 {
                     for (int iv = 0; iv < (_cellLsideMasterStep2VarMap.Count - 1); iv++)
                     {
-                        List<object> scope = new List<object>();
+                        List<float> scope = new List<float>();
                         for (int ivy = 0; ivy < (_cellLsideMasterStep2VarMap[iv].RowCount() - 1); ivy++)
                         {
                             b = _cellLsideMasterStep2VarMap[iv].Cell(ivy + 1, 1).TryGetValue<double>(out debuff);
-                            scope.Add(debuff);
+                            scope.Add(Convert.ToSingle(debuff));
                         }
                         buffer.Add(scope);
                     }
@@ -1493,11 +1529,11 @@ namespace LIBEXCELMANIPULATOR
         }
 
         
-        public List<List<object>> getRsideMasterStep3()
+        public List<List<float>> getRsideMasterStep3()
         {
             double debuff = new double();
             bool b = new bool();
-            List<List<object>> buffer = new List<List<object>> { };
+            List<List<float>> buffer = new List<List<float>> { };
 
             try
             {
@@ -1505,11 +1541,11 @@ namespace LIBEXCELMANIPULATOR
                 {
                     for (int iv = 0; iv < (_cellRsideMasterStep3VarMap.Count - 1); iv++)
                     {
-                        List<object> scope = new List<object>();
+                        List<float> scope = new List<float>();
                         for (int ivy = 0; ivy < (_cellRsideMasterStep3VarMap[iv].RowCount() - 1); ivy++)
                         {
                             b = _cellRsideMasterStep3VarMap[iv].Cell(ivy + 1, 1).TryGetValue<double>(out debuff);
-                            scope.Add(debuff);
+                            scope.Add(Convert.ToSingle(debuff));
                         }
                         buffer.Add(scope);
                     }
@@ -1519,11 +1555,11 @@ namespace LIBEXCELMANIPULATOR
             return buffer;
         }
 
-        public List<List<object>> getLsideMasterStep3()
+        public List<List<float>> getLsideMasterStep3()
         {
             double debuff = new double();
             bool b = new bool();
-            List<List<object>> buffer = new List<List<object>> { };
+            List<List<float>> buffer = new List<List<float>> { };
 
             try
             {
@@ -1531,11 +1567,11 @@ namespace LIBEXCELMANIPULATOR
                 {
                     for (int iv = 0; iv < (_cellLsideMasterStep3VarMap.Count - 1); iv++)
                     {
-                        List<object> scope = new List<object>();
+                        List<float> scope = new List<float>();
                         for (int ivy = 0; ivy < (_cellLsideMasterStep3VarMap[iv].RowCount() - 1); ivy++)
                         {
                             b = _cellLsideMasterStep3VarMap[iv].Cell(ivy + 1, 1).TryGetValue<double>(out debuff);
-                            scope.Add(debuff);
+                            scope.Add(Convert.ToSingle(debuff));
                         }
                         buffer.Add(scope);
                     }
@@ -1559,11 +1595,11 @@ namespace LIBEXCELMANIPULATOR
             catch { return 0; }
         }
 
-        public List<object> getRealtimeJudgement()
+        public List<float> getRealtimeJudgement()
         {
             double debuff = new double();
             bool b = new bool();
-            List<object> buffer = new List<object> { };
+            List<float> buffer = new List<float> { };
             try
             {
                 if (_filemode == 1)
@@ -1571,7 +1607,7 @@ namespace LIBEXCELMANIPULATOR
                     for (int i = 0; i < _cellRealtimeJudgementVarMap.Count; i++) 
                     {
                         b = _cellRealtimeJudgementVarMap[i].TryGetValue<double>(out debuff);
-                        buffer.Add(debuff); 
+                        buffer.Add(Convert.ToSingle(debuff)); 
                     }
                 }
             }
@@ -1599,32 +1635,6 @@ namespace LIBEXCELMANIPULATOR
             catch { return 0; }
         }
 
-        public List<List<object>> getRealtimeStep2()
-        {
-            List<List<object>> buffer = new List<List<object>> { };
-            double debuff = new double();
-            bool b = new bool();
-
-            try
-            {
-                if (_filemode == 1)
-                {
-                    for (int iv = 0; iv < (_cellRealtimeStep2VarMap.Count); iv++)
-                    {
-                        List<object> scope = new List<object>();
-                        for (int ivy = 0; ivy < (_cellRealtimeStep2VarMap[iv].RowCount() - 1); ivy++)
-                        {
-                            b = _cellRealtimeStep2VarMap[iv].Cell(ivy + 1,1).TryGetValue<double>(out debuff);
-                            scope.Add(debuff);
-                        }
-                        buffer.Add(scope);
-                    }
-                }
-            }
-            catch { }
-            return buffer;
-        }
-
         public int setRealtimeStep3<T>(List<List<T>> buffer)
         {
             try
@@ -1645,9 +1655,35 @@ namespace LIBEXCELMANIPULATOR
             catch { return 0; }
         }
 
-        public List<List<object>> getRealtimeStep3()
+        public List<List<float>> getRealtimeStep2()
         {
-            List<List<object>> buffer = new List<List<object>> { };
+            List<List<float>> buffer = new List<List<float>> { };
+            double debuff = new double();
+            bool b = new bool();
+
+            try
+            {
+                if (_filemode == 1)
+                {
+                    for (int iv = 0; iv < (_cellRealtimeStep2VarMap.Count); iv++)
+                    {
+                        List<float> scope = new List<float>();
+                        for (int ivy = 0; ivy < (_cellRealtimeStep2VarMap[iv].RowCount() - 1); ivy++)
+                        {
+                            b = _cellRealtimeStep2VarMap[iv].Cell(ivy + 1, 1).TryGetValue<double>(out debuff);
+                            scope.Add(Convert.ToSingle(debuff));
+                        }
+                        buffer.Add(scope);
+                    }
+                }
+            }
+            catch { }
+            return buffer;
+        }
+
+        public List<List<float>> getRealtimeStep3()
+        {
+            List<List<float>> buffer = new List<List<float>> { };
             double debuff = new double();
             bool b = new bool();
 
@@ -1657,11 +1693,11 @@ namespace LIBEXCELMANIPULATOR
                 {
                     for (int iv = 0; iv < (_cellRealtimeStep3VarMap.Count); iv++)
                     {
-                        List<object> scope = new List<object>();
+                        List<float> scope = new List<float>();
                         for (int ivy = 0; ivy < (_cellRealtimeStep3VarMap[iv].RowCount() - 1); ivy++)
                         {
                             b = _cellRealtimeStep3VarMap[iv].Cell(ivy + 1, 1).TryGetValue<double>(out debuff);
-                            scope.Add(debuff);
+                            scope.Add(Convert.ToSingle(debuff));
                         }
                         buffer.Add(scope);
                     }
@@ -1844,9 +1880,10 @@ namespace LIBEXCELMANIPULATOR
 
             MasterFile1.FileReadMaster("TestMaster1.xlsx");
             Console.WriteLine(MasterFile1.getModelName());
+            MasterFile1.setKYBNUM("750550");
             //Console.WriteLine(MasterFile1.getParameterStep1doublediscrete(1));
 
-            
+
             //RealtimeFile1.setModelName("KAYABA2");
             //RealtimeFile1.setParameterStep1doublediscrete(677.568, 1);
             //RealtimeFile1.RESET_LABEL_NG();
@@ -1873,13 +1910,13 @@ namespace LIBEXCELMANIPULATOR
                 //Console.WriteLine(str?.ToString());
             }
             Console.WriteLine("------------------------------------------");
-            List<List<object>> buffe1 = RealtimeFile1.getRealtimeStep2();
+            List<List<float>> buffe1 = RealtimeFile1.getRealtimeStep2();
             foreach (var str in buffe1[0])
             {
                 //Console.WriteLine(str?.ToString());
             }
 
-            List<List<object>> buffcombine = new List<List<object>> { };
+            List<List<float>> buffcombine = new List<List<float>> { };
             
 
             //writecopy realtime to master
@@ -1893,16 +1930,16 @@ namespace LIBEXCELMANIPULATOR
 
 
             Console.WriteLine("------------------------------------------");
-            List<List<object>> buffe2 = MasterFile1.getRsideMasterStep2();
+            List<List<float>> buffe2 = MasterFile1.getRsideMasterStep2();
             foreach (var str in buffe2[0])
             {
-                Console.WriteLine(str?.ToString());
+                Console.WriteLine(str.ToString());
             }
             Console.WriteLine("------------------------------------------");
-            List<List<object>> buffe3 = MasterFile1.getLsideMasterStep2();
+            List<List<float>> buffe3 = MasterFile1.getLsideMasterStep2();
             foreach (var str in buffe3[0])
             {
-                Console.WriteLine(str?.ToString());
+                Console.WriteLine(str.ToString());
             }
 
             MasterFile1.setModelName("KAYABA1");
