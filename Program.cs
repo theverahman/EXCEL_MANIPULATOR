@@ -7,7 +7,6 @@ using Irony;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -1493,8 +1492,7 @@ namespace LIBEXCELMANIPULATOR
                         for (int ivy = 0; ivy < (_cellRsideMasterStep2VarMap[iv].RowCount() - 1); ivy++)
                         {
                             b = _cellRsideMasterStep2VarMap[iv].Cell(ivy + 1, 1).TryGetValue<double>(out debuff);
-                            scope.Add(Convert.ToSingle(debuff));
-                            Debug.WriteLine(Convert.ToSingle(debuff));
+                            scope.Add(Convert.ToSingle(debuff));  
                         }
                         buffer.Add(scope);
                     }
