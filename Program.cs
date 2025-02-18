@@ -1486,12 +1486,13 @@ namespace LIBEXCELMANIPULATOR
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < (_cellRsideMasterStep2VarMap.Count - 1); iv++)
+                    for (int iv = 0; iv < (_cellRsideMasterStep2VarMap.Count); iv++)
                     {
                         List<float> scope = new List<float>();
                         for (int ivy = 0; ivy < (_cellRsideMasterStep2VarMap[iv].RowCount() - 1); ivy++)
                         {
                             b = _cellRsideMasterStep2VarMap[iv].Cell(ivy + 1, 1).TryGetValue<double>(out debuff);
+                            if (debuff == null) { debuff = 0; }
                             scope.Add(Convert.ToSingle(debuff));  
                         }
                         buffer.Add(scope);
@@ -1512,12 +1513,13 @@ namespace LIBEXCELMANIPULATOR
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < (_cellLsideMasterStep2VarMap.Count - 1); iv++)
+                    for (int iv = 0; iv < (_cellLsideMasterStep2VarMap.Count); iv++)
                     {
                         List<float> scope = new List<float>();
                         for (int ivy = 0; ivy < (_cellLsideMasterStep2VarMap[iv].RowCount() - 1); ivy++)
                         {
                             b = _cellLsideMasterStep2VarMap[iv].Cell(ivy + 1, 1).TryGetValue<double>(out debuff);
+                            if (debuff == null) { debuff = 0; }
                             scope.Add(Convert.ToSingle(debuff));
                         }
                         buffer.Add(scope);
@@ -1539,12 +1541,13 @@ namespace LIBEXCELMANIPULATOR
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < (_cellRsideMasterStep3VarMap.Count - 1); iv++)
+                    for (int iv = 0; iv < (_cellRsideMasterStep3VarMap.Count); iv++)
                     {
                         List<float> scope = new List<float>();
                         for (int ivy = 0; ivy < (_cellRsideMasterStep3VarMap[iv].RowCount() - 1); ivy++)
                         {
                             b = _cellRsideMasterStep3VarMap[iv].Cell(ivy + 1, 1).TryGetValue<double>(out debuff);
+                            if (debuff == null) { debuff = 0; }
                             scope.Add(Convert.ToSingle(debuff));
                         }
                         buffer.Add(scope);
@@ -1565,12 +1568,13 @@ namespace LIBEXCELMANIPULATOR
             {
                 if (_filemode == 0)
                 {
-                    for (int iv = 0; iv < (_cellLsideMasterStep3VarMap.Count - 1); iv++)
+                    for (int iv = 0; iv < (_cellLsideMasterStep3VarMap.Count); iv++)
                     {
                         List<float> scope = new List<float>();
                         for (int ivy = 0; ivy < (_cellLsideMasterStep3VarMap[iv].RowCount() - 1); ivy++)
                         {
                             b = _cellLsideMasterStep3VarMap[iv].Cell(ivy + 1, 1).TryGetValue<double>(out debuff);
+                            if (debuff == null) { debuff = 0; }
                             scope.Add(Convert.ToSingle(debuff));
                         }
                         buffer.Add(scope);
