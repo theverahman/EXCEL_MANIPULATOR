@@ -30,6 +30,7 @@ namespace LIBEXCELMANIPULATOR
         protected IXLRange? _rangeNGLABELLogBuffer;
         protected IXLRange? _cellNGLABELLogBuffer;
 
+        protected IXLRange? _rangeMasterSizeParam;
         protected IXLRange? _rangeMasterModelTable;
         protected IXLRange? _rangeMasterKYBNUM;
         protected IXLRange? _rangeMasterStep1Param;
@@ -43,6 +44,8 @@ namespace LIBEXCELMANIPULATOR
         //IXLRange _rangeMasterStep4;
         //IXLRange _rangeMasterStep5;
 
+
+        protected IXLRange? _rangeRealtimeSizeParam;
         protected IXLRange? _rangeRealtimeModelTable;
         protected IXLRange? _rangeRealtimeKYBNUM;
         protected IXLRange? _rangeRealtimeStep1Param;
@@ -53,6 +56,14 @@ namespace LIBEXCELMANIPULATOR
         protected IXLRange? _rangeRealtimeStep3;
         //IXLRange _rangeRealtimeStep4;
         //IXLRange _rangeRealtimeStep5;
+
+        protected IXLCell? _cellMasterMaxLoad;
+        protected IXLCell? _cellMasterProdLength;
+        void _initMasterSizeTableVarMap()
+        {
+            _cellMasterMaxLoad = _rangeMasterSizeParam.Cell(2, 4);
+            _cellMasterProdLength = _rangeMasterSizeParam.Cell(3, 4);
+        }
 
         protected List<IXLCell>? _cellMasterModelTableVarMap = new List<IXLCell>();
         protected IXLCell? _cellMasterModelName;
@@ -346,6 +357,14 @@ namespace LIBEXCELMANIPULATOR
         //List<IXLCell> _cellMasterStep4VarMap = new List<IXLCell>();
         //List<IXLCell> _cellMasterStep5VarMap = new List<IXLCell>();
 
+        protected IXLCell? _cellRealtimeMaxLoad;
+        protected IXLCell? _cellRealtimeProdLength;
+        void _initRealtimeSizeTableVarMap()
+        {
+            _cellRealtimeMaxLoad = _rangeRealtimeSizeParam.Cell(2, 4);
+            _cellRealtimeProdLength = _rangeRealtimeSizeParam.Cell(3, 4);
+        }
+
         protected List<IXLCell>? _cellRealtimeModelTableVarMap = new List<IXLCell>();
         protected IXLCell? _cellRealtimeModelName;
         protected IXLCell? _cellRealtimeKYBNUM;
@@ -551,6 +570,13 @@ namespace LIBEXCELMANIPULATOR
                 new object[] { "Time:", "", "Hour", "", "Minutes", "", "Second" }
             };
 
+        List<object[]> blueprintSizeTable = new List<object[]>
+            {
+                new object[] { "PARAMETERS", "", "", "COMMON"},
+                new object[] { "Maximum Load:", "", ""},
+                new object[] { "Product Length:", "", ""}
+            };
+
         List<object[]> blueprintStep1Table = new List<object[]>
             {
                 new object[] { "PARAMETERS", "", "", "STEP1"},
@@ -673,6 +699,29 @@ namespace LIBEXCELMANIPULATOR
             wsr.Rows(2, 3).Style.Border.SetInsideBorder(XLBorderStyleValues.Thin);
             wsr.Rows(2, 3).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
             
+        }
+
+        void formattingSizeParam(ref IXLRange wsr)
+        {
+            wsr.FirstCell().InsertData(blueprintSizeTable);
+            wsr.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Bottom);
+            wsr.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+            wsr.FirstRow().Style.Font.SetBold();
+            wsr.Cell(1, 4).Style.Font.SetUnderline();
+
+
+            wsr.Range(1, 1, 1, 3).Merge();
+            wsr.Range(1, 1, 1, 3).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+            wsr.Range(2, 1, 2, 3).Merge();
+            wsr.Range(2, 1, 2, 3).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
+            wsr.Range(3, 1, 3, 3).Merge();
+            wsr.Range(3, 1, 3, 3).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
+
+
+            wsr.Style.Border.SetInsideBorder(XLBorderStyleValues.Thin);
+            wsr.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+            wsr.FirstRow().Style.Border.SetBottomBorder(XLBorderStyleValues.Thick);
+            wsr.Column(3).Style.Border.SetRightBorder(XLBorderStyleValues.Thick);
         }
 
         void formattingStep1Param(ref IXLRange wsr)
@@ -930,6 +979,11 @@ namespace LIBEXCELMANIPULATOR
             _rangeMasterStep1Param = _mastering.Range("A6:D12");
             formattingStep1Param(ref _rangeMasterStep1Param);
             _initMasterStep1ParamVarMap();
+
+            _rangeMasterSizeParam = _mastering.Range("A14:D16");
+            formattingSizeParam(ref _rangeMasterSizeParam);
+            _initMasterSizeTableVarMap();
+
             _rangeMasterStep2345Param = _mastering.Range("F6:M16");
             formattingStep2345Param(ref _rangeMasterStep2345Param);
             _initMasterStep2345ParamVarMap();
@@ -970,6 +1024,11 @@ namespace LIBEXCELMANIPULATOR
             _rangeRealtimeStep1Param = _realtime.Range("A6:D12");
             formattingStep1Param(ref _rangeRealtimeStep1Param);
             _initRealtimeStep1ParamVarMap();
+
+            _rangeRealtimeSizeParam = _realtime.Range("A14:D16");
+            formattingSizeParam(ref _rangeRealtimeSizeParam);
+            _initRealtimeSizeTableVarMap();
+
             _rangeRealtimeStep2345Param = _realtime.Range("F6:M16");
             formattingStep2345Param(ref _rangeRealtimeStep2345Param);
             _initRealtimeStep2345ParamVarMap();
@@ -1204,6 +1263,80 @@ namespace LIBEXCELMANIPULATOR
             return buffer;
         }
 
+        public int setParameterMaxLoad(double buffer)
+        {
+            //try
+            {
+                if (_filemode == 1)
+                {
+                    _cellRealtimeMaxLoad.SetValue(buffer);
+                }
+                else if (_filemode == 0)
+                {
+                    _cellMasterMaxLoad.SetValue(buffer);
+                }
+                return 1;
+            }
+            //catch { return 0; }
+
+        }
+
+        public double getParameterMaxLoad()
+        {
+            double buffer = new double();
+            bool b = new bool();
+            try
+            {
+                if (_filemode == 1)
+                {
+                    b = _cellRealtimeMaxLoad.TryGetValue<double>(out buffer);
+                }
+                else if (_filemode == 0)
+                {
+                    b = _cellMasterMaxLoad.TryGetValue<double>(out buffer);
+                }
+            }
+            catch { }
+            return buffer;
+        }
+
+        public int setParameterProdLength(double buffer)
+        {
+            //try
+            {
+                if (_filemode == 1)
+                {
+                    _cellRealtimeProdLength.SetValue(buffer);
+                }
+                else if (_filemode == 0)
+                {
+                    _cellMasterProdLength.SetValue(buffer);
+                }
+                return 1;
+            }
+            //catch { return 0; }
+
+        }
+
+        public double getParameterProdLength()
+        {
+            double buffer = new double();
+            bool b = new bool();
+            try
+            {
+                if (_filemode == 1)
+                {
+                    b = _cellRealtimeProdLength.TryGetValue<double>(out buffer);
+                }
+                else if (_filemode == 0)
+                {
+                    b = _cellMasterProdLength.TryGetValue<double>(out buffer);
+                }
+            }
+            catch { }
+            return buffer;
+        }
+
         public int setParameterStep1doublediscrete(double buffer, int index)
         {
             //try
@@ -1225,7 +1358,6 @@ namespace LIBEXCELMANIPULATOR
         public double getParameterStep1doublediscrete(int index)
         {
             double buffer = new double();
-            byte buff = new byte();
             bool b = new bool(); 
             try
             {
