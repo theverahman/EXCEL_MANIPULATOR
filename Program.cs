@@ -1057,7 +1057,7 @@ namespace LIBEXCELMANIPULATOR
             _initMasterStep2345ParamVarMap();
 
             _rangeMasterStep2345Param2 = _mastering.Range("O6:W8");
-            formattingStep2345Param2(ref _rangeMasterStep2345Param);
+            formattingStep2345Param2(ref _rangeMasterStep2345Param2);
             _initMasterStep2345ParamVarMap2();
 
             //Header R
@@ -1108,7 +1108,7 @@ namespace LIBEXCELMANIPULATOR
             _initRealtimeStep2345ParamVarMap();
 
             _rangeRealtimeStep2345Param2 = _realtime.Range("O6:W8");
-            formattingStep2345Param2(ref _rangeRealtimeStep2345Param);
+            formattingStep2345Param2(ref _rangeRealtimeStep2345Param2);
             _initRealtimeStep2345ParamVarMap2();
 
             _rangeRealtimeJudgement = _realtime.Range("A18:G22");
