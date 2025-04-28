@@ -35,6 +35,7 @@ namespace LIBEXCELMANIPULATOR
         protected IXLRange? _rangeMasterKYBNUM;
         protected IXLRange? _rangeMasterStep1Param;
         protected IXLRange? _rangeMasterStep2345Param;
+        protected IXLRange? _rangeMasterStep2345Param2;
         protected IXLRange? _rangeRsideMasterDataHeader;
         protected IXLRange? _rangeLsideMasterDataHeader;
         protected IXLRange? _rangeRsideMasterStep2;
@@ -50,6 +51,7 @@ namespace LIBEXCELMANIPULATOR
         protected IXLRange? _rangeRealtimeKYBNUM;
         protected IXLRange? _rangeRealtimeStep1Param;
         protected IXLRange? _rangeRealtimeStep2345Param;
+        protected IXLRange? _rangeRealtimeStep2345Param2;
         protected IXLRange? _rangeRealtimeDataHeader;
         protected IXLRange? _rangeRealtimeJudgement;
         protected IXLRange? _rangeRealtimeStep2;
@@ -186,6 +188,25 @@ namespace LIBEXCELMANIPULATOR
             _cellMasterStep2345ParamVarMap.Add(_cellMasterStep3ExtnJudgePosMax);
             _cellMasterStep2345ParamVarMap.Add(_cellMasterStep3ExtnLoadRefPos);
             _cellMasterStep2345ParamVarMap.Add(_cellMasterStep3LoadRefTolerance);
+        }
+
+        protected List<IXLCell>? _cellMasterStep2345ParamVarMap2 = new List<IXLCell>();
+        protected IXLCell? _cellMasterStep2DiffPosMin;
+        protected IXLCell? _cellMasterStep2DiffPosMax;
+        protected IXLCell? _cellMasterStep3DiffPosMin;
+        protected IXLCell? _cellMasterStep3DiffPosMax;
+
+        void _initMasterStep2345ParamVarMap2()
+        {
+            _cellMasterStep2DiffPosMin = _rangeMasterStep2345Param2.Cell(2, 6);
+            _cellMasterStep2DiffPosMax = _rangeMasterStep2345Param2.Cell(3, 6);
+            _cellMasterStep3DiffPosMin = _rangeMasterStep2345Param2.Cell(2, 7);
+            _cellMasterStep3DiffPosMax = _rangeMasterStep2345Param2.Cell(3, 7);
+
+            _cellMasterStep2345ParamVarMap2.Add(_cellMasterStep2DiffPosMin);
+            _cellMasterStep2345ParamVarMap2.Add(_cellMasterStep2DiffPosMax);
+            _cellMasterStep2345ParamVarMap2.Add(_cellMasterStep3DiffPosMin);
+            _cellMasterStep2345ParamVarMap2.Add(_cellMasterStep3DiffPosMax);
         }
 
         protected List<IXLRange>? _cellRsideMasterStep2VarMap = new List<IXLRange>();
@@ -488,6 +509,25 @@ namespace LIBEXCELMANIPULATOR
             _cellRealtimeStep2345ParamVarMap.Add(_cellRealtimeStep3LoadRefTolerance);
         }
 
+        protected List<IXLCell>? _cellRealtimeStep2345ParamVarMap2 = new List<IXLCell>();
+        protected IXLCell? _cellRealtimeStep2DiffPosMin;
+        protected IXLCell? _cellRealtimeStep2DiffPosMax;
+        protected IXLCell? _cellRealtimeStep3DiffPosMin;
+        protected IXLCell? _cellRealtimeStep3DiffPosMax;
+
+        void _initRealtimeStep2345ParamVarMap2()
+        {
+            _cellRealtimeStep2DiffPosMin = _rangeRealtimeStep2345Param2.Cell(2, 6);
+            _cellRealtimeStep2DiffPosMax = _rangeRealtimeStep2345Param2.Cell(3, 6);
+            _cellRealtimeStep3DiffPosMin = _rangeRealtimeStep2345Param2.Cell(2, 7);
+            _cellRealtimeStep3DiffPosMax = _rangeRealtimeStep2345Param2.Cell(3, 7);
+
+            _cellRealtimeStep2345ParamVarMap2.Add(_cellRealtimeStep2DiffPosMin);
+            _cellRealtimeStep2345ParamVarMap2.Add(_cellRealtimeStep2DiffPosMax);
+            _cellRealtimeStep2345ParamVarMap2.Add(_cellRealtimeStep3DiffPosMin);
+            _cellRealtimeStep2345ParamVarMap2.Add(_cellRealtimeStep3DiffPosMax);
+        }
+
         protected List<IXLCell>? _cellRealtimeJudgementVarMap = new List<IXLCell>();
         protected IXLCell? _cellMaxLoad;
         protected IXLCell? _cellStep2CompLoadRef;
@@ -601,6 +641,13 @@ namespace LIBEXCELMANIPULATOR
                 new object[] { "Extension  Judge Stroke Max mm:", "", "", ""},
                 new object[] { "Extension Load Reference Stroke mm:", "", "", ""},
                 new object[] { "Comp /Ext Load Reference Tolerance %:", "", "", ""}
+            };
+
+        List<object[]> blueprintStep2345Table2 = new List<object[]>
+            {
+                new object[] { "PARAMETERS", "", "", "", "", "STEP2", "STEP3" },
+                new object[] { "Difference Minimum Measurement Limit mm:", "", "", "", "" },
+                new object[] { "Difference Maximum Measurement Limit mm:", "", "", "", "" }
             };
 
         List<object[]> blueprintRsideMasterDataHeader = new List<object[]>
@@ -786,6 +833,26 @@ namespace LIBEXCELMANIPULATOR
             wsr.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
             wsr.FirstRow().Style.Border.SetBottomBorder(XLBorderStyleValues.Thick);
             wsr.Column(4).Style.Border.SetRightBorder(XLBorderStyleValues.Thick);
+        }
+
+        void formattingStep2345Param2(ref IXLRange wsr)
+        {
+            wsr.FirstCell().InsertData(blueprintStep2345Table2);
+            wsr.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Bottom);
+            wsr.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+            wsr.FirstRow().Style.Font.SetBold();
+            wsr.Range(1, 6, 1, 7).Style.Font.SetUnderline();
+            wsr.Range(1, 1, 1, 5).Merge();
+            wsr.Range(1, 1, 1, 5).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+            wsr.Range(2, 1, 2, 5).Merge();
+            wsr.Range(2, 1, 2, 5).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
+            wsr.Range(3, 1, 3, 5).Merge();
+            wsr.Range(3, 1, 3, 5).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
+
+            wsr.Style.Border.SetInsideBorder(XLBorderStyleValues.Thin);
+            wsr.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick);
+            wsr.FirstRow().Style.Border.SetBottomBorder(XLBorderStyleValues.Thick);
+            wsr.Column(5).Style.Border.SetRightBorder(XLBorderStyleValues.Thick);
         }
 
         void formattingRsideMasterDataHeader(ref IXLRange wsr)
@@ -976,17 +1043,23 @@ namespace LIBEXCELMANIPULATOR
             _rangeMasterModelTable = _mastering.Range("A1:G3");
             formattingModelTable(ref _rangeMasterModelTable);
             _initMasterModelTableVarMap();
-            _rangeMasterStep1Param = _mastering.Range("A6:D12");
-            formattingStep1Param(ref _rangeMasterStep1Param);
-            _initMasterStep1ParamVarMap();
 
-            _rangeMasterSizeParam = _mastering.Range("A14:D16");
+            _rangeMasterSizeParam = _mastering.Range("A6:D8");
             formattingSizeParam(ref _rangeMasterSizeParam);
             _initMasterSizeTableVarMap();
+
+            _rangeMasterStep1Param = _mastering.Range("A10:D16");
+            formattingStep1Param(ref _rangeMasterStep1Param);
+            _initMasterStep1ParamVarMap();
 
             _rangeMasterStep2345Param = _mastering.Range("F6:M16");
             formattingStep2345Param(ref _rangeMasterStep2345Param);
             _initMasterStep2345ParamVarMap();
+
+            _rangeMasterStep2345Param2 = _mastering.Range("O6:W8");
+            formattingStep2345Param2(ref _rangeMasterStep2345Param);
+            _initMasterStep2345ParamVarMap2();
+
             //Header R
             _rangeRsideMasterDataHeader = _mastering.Range("A18:Y18");
             formattingRsideMasterDataHeader(ref _rangeRsideMasterDataHeader);
@@ -1021,17 +1094,23 @@ namespace LIBEXCELMANIPULATOR
             _rangeRealtimeModelTable = _realtime.Range("A1:G3");
             formattingModelTable(ref _rangeRealtimeModelTable);
             _initRealtimeModelTableVarMap();
-            _rangeRealtimeStep1Param = _realtime.Range("A6:D12");
-            formattingStep1Param(ref _rangeRealtimeStep1Param);
-            _initRealtimeStep1ParamVarMap();
 
-            _rangeRealtimeSizeParam = _realtime.Range("A14:D16");
+            _rangeRealtimeSizeParam = _realtime.Range("A6:D8");
             formattingSizeParam(ref _rangeRealtimeSizeParam);
             _initRealtimeSizeTableVarMap();
+
+            _rangeRealtimeStep1Param = _realtime.Range("A10:D16");
+            formattingStep1Param(ref _rangeRealtimeStep1Param);
+            _initRealtimeStep1ParamVarMap();
 
             _rangeRealtimeStep2345Param = _realtime.Range("F6:M16");
             formattingStep2345Param(ref _rangeRealtimeStep2345Param);
             _initRealtimeStep2345ParamVarMap();
+
+            _rangeRealtimeStep2345Param2 = _realtime.Range("O6:W8");
+            formattingStep2345Param2(ref _rangeRealtimeStep2345Param);
+            _initRealtimeStep2345ParamVarMap2();
+
             _rangeRealtimeJudgement = _realtime.Range("A18:G22");
             formattingRealtimeJudgement(ref _rangeRealtimeJudgement);
             _initRealtimeJudgementVarMap();
@@ -1517,6 +1596,78 @@ namespace LIBEXCELMANIPULATOR
                     {
                         b = _cellMasterStep2345ParamVarMap[i].TryGetValue<double>(out debuff);
                         buffer.Add(Convert.ToSingle(debuff)); 
+                    }
+                }
+            }
+            catch { }
+            return buffer;
+        }
+
+        public int setParameterStep2345_2<T>(List<T> buffer)
+        {
+            //try
+            List<Object?> buffobj = buffer.ConvertAll(x => (Object)x);
+            {
+                if (_filemode == 1)
+                {
+                    for (int i = 0; i < _cellRealtimeStep2345ParamVarMap2.Count; i++)
+                    {
+                        var sbuff = Convert.ChangeType(buffobj[i], buffobj[i].GetType());
+                        Int32 check_int = new Int32();
+                        Single check_float = new Single();
+                        if (sbuff.GetType() != check_float.GetType())
+                        {
+                            _cellRealtimeStep2345ParamVarMap2[i].SetValue((Single)Convert.ToSingle(sbuff));
+                        }
+                        else if (sbuff.GetType() == check_float.GetType())
+                        {
+                            _cellRealtimeStep2345ParamVarMap2[i].SetValue((Single)sbuff);
+                        }
+                    }
+                }
+                else if (_filemode == 0)
+                {
+                    for (int i = 0; i < _cellMasterStep2345ParamVarMap2.Count; i++)
+                    {
+                        var sbuff = Convert.ChangeType(buffobj[i], buffobj[i].GetType());
+                        Int32 check_int = new Int32();
+                        Single check_float = new Single();
+                        if (sbuff.GetType() != check_float.GetType())
+                        {
+                            _cellMasterStep2345ParamVarMap2[i].SetValue((Single)Convert.ToSingle(sbuff));
+                        }
+                        else if (sbuff.GetType() == check_float.GetType())
+                        {
+                            _cellMasterStep2345ParamVarMap2[i].SetValue((Single)sbuff);
+                        }
+                    }
+                }
+                return 1;
+            }
+            //catch { return 0; }
+        }
+
+        public List<float> getParameterStep2345_2()
+        {
+            double debuff = new double();
+            bool b = new bool();
+            List<float> buffer = new List<float> { };
+            try
+            {
+                if (_filemode == 1)
+                {
+                    for (int i = 0; i < _cellRealtimeStep2345ParamVarMap2.Count; i++)
+                    {
+                        b = _cellRealtimeStep2345ParamVarMap2[i].TryGetValue<double>(out debuff);
+                        buffer.Add(Convert.ToSingle(debuff));
+                    }
+                }
+                else if (_filemode == 0)
+                {
+                    for (int i = 0; i < _cellMasterStep2345ParamVarMap2.Count; i++)
+                    {
+                        b = _cellMasterStep2345ParamVarMap2[i].TryGetValue<double>(out debuff);
+                        buffer.Add(Convert.ToSingle(debuff));
                     }
                 }
             }
